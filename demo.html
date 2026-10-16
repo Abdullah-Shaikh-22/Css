@@ -10,12 +10,10 @@
     font-family: 'Comic Sans MS', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: #fdf0f5; min-height: 100vh; color: #4a2c3a; overflow-x: hidden;
   }
-
-  /* ============ PAGE SYSTEM ============ */
   .page { display: none; min-height: 100vh; width: 100%; position: relative; overflow: hidden; }
   .page.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
-  /* ============ PAGE 1: COUNTDOWN ============ */
+  /* PAGE 1: COUNTDOWN */
   #page1 { background: #1a0a0a; }
   .curtain {
     position: absolute; inset: 0;
@@ -34,7 +32,6 @@
     box-shadow: 0 8px 30px rgba(0,0,0,.7); z-index: 3; border-bottom: 2px solid #8b1a2b;
   }
   .countdown-content { position: relative; z-index: 5; text-align: center; padding: 20px; }
-
   .big-clock {
     width: 320px; height: 320px; margin: 0 auto 30px;
     border-radius: 50%; background: radial-gradient(circle at 30% 30%, #2a1a3a, #0a0512);
@@ -54,7 +51,6 @@
   .hand-minute { width: 3px; height: 32%; margin-left: -1.5px; }
   .hand-second { width: 2px; height: 38%; margin-left: -1px; background: #ff3366; box-shadow: 0 0 10px rgba(255,51,102,.9); }
   .clock-center-dot { position: absolute; top: 50%; left: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; background: #d4af37; border-radius: 50%; box-shadow: 0 0 15px #d4af37; z-index: 3; }
-
   .countdown-box {
     display: inline-block; padding: 16px 40px;
     background: rgba(10,5,18,.75); border: 3px solid #d4af37; border-radius: 12px;
@@ -63,7 +59,6 @@
   .countdown-box .label { font-family: Georgia, serif; font-size: .85rem; color: #d4af37; letter-spacing: 4px; margin-bottom: 6px; }
   .countdown-box .time { font-family: 'Courier New', monospace; font-size: 2.4rem; font-weight: bold; color: #d4af37; letter-spacing: 3px; text-shadow: 0 0 20px rgba(212,175,55,.9); }
   .countdown-box .sub { font-size: .75rem; color: #b8941a; margin-top: 6px; letter-spacing: 2px; }
-
   .skip-btn {
     padding: 12px 32px; background: transparent; color: #d4af37;
     border: 2px solid #d4af37; border-radius: 100px; font-size: .85rem;
@@ -74,7 +69,7 @@
   .cd-sparkle { position: absolute; width: 4px; height: 4px; background: #d4af37; border-radius: 50%; box-shadow: 0 0 12px #d4af37; animation: sparkleFloat 4s ease-in-out infinite; z-index: 4; }
   @keyframes sparkleFloat { 0%,100% { opacity: .3; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.5); } }
 
-  /* ============ PAGE 2: PASSCODE ============ */
+  /* PAGE 2: PASSCODE */
   #page2 { background: #faf6e9; flex-direction: row !important; padding: 0; }
   @media (max-width: 768px) { #page2 { flex-direction: column !important; } }
   .passcode-left {
@@ -99,7 +94,6 @@
   .polaroid .shinchan { font-size: 8rem; animation: cakeBounce 2s ease-in-out infinite; }
   @keyframes cakeBounce { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-8px) rotate(3deg); } }
   .polaroid .caption { text-align: center; font-family: 'Comic Sans MS'; font-size: 1rem; color: #8a6d3a; font-weight: bold; margin-top: 12px; }
-
   .passcode-right {
     flex: 1; background: #b8a8d8; display: flex; align-items: center; justify-content: center;
     padding: 40px 20px; position: relative; min-height: 100vh;
@@ -120,7 +114,6 @@
   .passcode-dot.filled { background: #f5e88a; color: #8a6d3a; border-color: #f5e88a; transform: scale(1.08); box-shadow: 0 4px 14px rgba(245,232,138,.6); }
   .passcode-dot.active { border-color: #fff; background: rgba(255,255,255,.5); animation: dotPulse 1.5s ease-in-out infinite; }
   @keyframes dotPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,255,255,.6); } 50% { box-shadow: 0 0 0 8px rgba(255,255,255,0); } }
-
   .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 250px; margin: 0 auto; }
   .key {
     aspect-ratio: 1; border-radius: 50%;
@@ -136,14 +129,12 @@
   .passcode-box.shake { animation: shakeError .5s; }
   @keyframes shakeError {
     0%,100% { transform: translateX(0); }
-    20% { transform: translateX(-12px); }
-    40% { transform: translateX(12px); }
-    60% { transform: translateX(-8px); }
-    80% { transform: translateX(8px); }
+    20% { transform: translateX(-12px); } 40% { transform: translateX(12px); }
+    60% { transform: translateX(-8px); } 80% { transform: translateX(8px); }
   }
   .error-msg { color: #ffd0d0; font-size: .85rem; font-weight: 600; min-height: 22px; margin-top: 16px; text-shadow: 0 2px 6px rgba(120,60,60,.4); }
 
-  /* ============ COMMON ============ */
+  /* COMMON */
   .checkered-bg {
     position: absolute; inset: 0; z-index: 0; background-color: #fce8f0;
     background-image: 
@@ -162,7 +153,6 @@
     z-index: 10; box-shadow: 0 -4px 10px rgba(255,136,153,.3);
   }
   .page-content { position: relative; z-index: 5; text-align: center; padding: 40px 20px; max-width: 750px; width: 100%; }
-
   .funny-title {
     font-family: 'Comic Sans MS'; font-size: 1.9rem; font-weight: 800;
     color: #e63950; letter-spacing: .5px; margin-bottom: 24px;
@@ -170,7 +160,6 @@
     animation: titleWiggle 3s ease-in-out infinite;
   }
   @keyframes titleWiggle { 0%,100% { transform: rotate(-1.5deg); } 50% { transform: rotate(1.5deg); } }
-
   .cartoon-box {
     display: inline-block; padding: 12px; background: #fff; border-radius: 16px;
     box-shadow: 0 10px 30px rgba(200,100,130,.2); margin: 20px auto;
@@ -185,7 +174,6 @@
     font-size: 8rem; overflow: hidden;
   }
   .cartoon-inner img { width: 100%; height: 100%; object-fit: cover; }
-
   .btn-row { display: flex; justify-content: center; gap: 30px; margin-top: 26px; flex-wrap: wrap; align-items: center; }
   .pill-btn {
     padding: 16px 44px; border-radius: 100px; border: none;
@@ -198,8 +186,8 @@
   }
   .pill-btn:hover { transform: translateY(3px); box-shadow: 0 3px 0 #8b2535, 0 6px 14px rgba(200,60,90,.4); }
 
-  /* ============ PAGE 5: HEARTS ============ */
-  .boxes-grid { display: flex; justify-content: center; gap: 26px; flex-wrap: wrap; margin: 30px 0; }
+  /* HEARTS */
+  .boxes-grid { display: flex; justify-content: center; gap: 26px; flex-wrap: wrap; margin: 30px 0 50px; }
   .heart-box {
     width: 145px; height: 145px; cursor: pointer; position: relative;
     transition: transform .4s cubic-bezier(.34,1.56,.64,1);
@@ -227,7 +215,7 @@
     white-space: nowrap; font-family: 'Comic Sans MS';
   }
 
-  /* ============ HEART CONTENT MODAL ============ */
+  /* HEART MODAL */
   .heart-modal {
     display: none; position: fixed; inset: 0;
     background: rgba(74,44,58,.92); backdrop-filter: blur(10px);
@@ -251,7 +239,6 @@
     font-family: 'Comic Sans MS'; font-size: 1.4rem; color: #e63950;
     display: flex; align-items: center; gap: 10px; font-weight: 800;
   }
-  .heart-modal-head p { font-size: .82rem; color: #a0496a; font-style: italic; margin-top: 4px; }
   .heart-close {
     padding: 10px 22px; border: none; border-radius: 100px;
     background: linear-gradient(135deg, #ff5566, #e63950);
@@ -261,14 +248,12 @@
   }
   .heart-close:active { transform: translateY(4px); box-shadow: 0 0 0 #8b2535; }
   .heart-content-area { min-height: 200px; }
-
   .heart-empty {
     text-align: center; padding: 60px 20px; color: #a0496a;
     font-style: italic; font-size: .95rem;
     background: linear-gradient(135deg, #fff5f8, #fce8f0);
     border-radius: 16px; border: 2px dashed rgba(255,180,200,.5);
   }
-
   .heart-items-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 16px;
@@ -290,10 +275,8 @@
   .heart-item-info { padding: 12px 14px; }
   .heart-item-info h4 { font-size: .88rem; color: #4a2c3a; margin-bottom: 4px; font-weight: 800; }
   .heart-item-info p { font-size: .74rem; color: #a0496a; line-height: 1.5; }
-
   .heart-audio-player { padding: 14px; }
   .heart-audio-player audio { width: 100%; }
-
   .heart-shayari-card {
     background: linear-gradient(135deg, #fff5f8, #fce8f0);
     border: 2px solid rgba(255,180,200,.5); border-radius: 18px;
@@ -318,12 +301,39 @@
     padding: 3px 10px; border-radius: 100px;
     background: #fce8f0; color: #e63950; font-weight: 700;
   }
-
   .heart-video-card video, .heart-video-card iframe {
     width: 100%; display: block; background: #000;
   }
 
-  /* ============ JASMINE FINAL PAGE ============ */
+  /* Cute Next button - sticky */
+  .cute-next {
+    position: fixed; bottom: 30px; right: 30px;
+    width: 70px; height: 70px; border-radius: 50%;
+    background: linear-gradient(135deg, #ff8899, #ff5566);
+    color: #fff; border: 4px solid #fff;
+    font-size: 1.7rem; cursor: pointer;
+    box-shadow: 0 10px 30px rgba(230,60,90,.5), 0 0 0 6px rgba(255,136,153,.3);
+    z-index: 400;
+    display: flex; align-items: center; justify-content: center;
+    animation: cuteBounce 2s ease-in-out infinite;
+    transition: .3s;
+  }
+  .cute-next:hover { transform: scale(1.15) rotate(10deg); box-shadow: 0 15px 40px rgba(230,60,90,.7); }
+  @keyframes cuteBounce {
+    0%,100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-8px) rotate(-5deg); }
+  }
+  .cute-next::after {
+    content: 'Tap me!';
+    position: absolute; top: -32px; left: 50%; transform: translateX(-50%);
+    background: #fff; color: #e63950;
+    font-size: .7rem; font-weight: 700;
+    padding: 4px 12px; border-radius: 100px;
+    box-shadow: 0 4px 12px rgba(230,60,90,.3);
+    white-space: nowrap; font-family: 'Comic Sans MS';
+  }
+
+  /* JASMINE FINAL PAGE */
   #pageJasmine { background: linear-gradient(135deg, #fefefe 0%, #f7faf5 40%, #f0f7f0 100%); }
   .jasmine-bg-page { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
   .jasmine-fall {
@@ -339,33 +349,52 @@
   }
   .jasmine-content {
     position: relative; z-index: 5; text-align: center; padding: 40px 20px;
-    max-width: 720px;
+    max-width: 720px; width: 100%;
   }
   .jasmine-bouquet {
-    font-size: 8rem; animation: bouquetFloat 3s ease-in-out infinite;
+    font-size: 9rem; animation: bouquetFloat 3s ease-in-out infinite;
     filter: drop-shadow(0 15px 30px rgba(160,190,130,.4));
-    display: inline-block;
+    display: inline-block; line-height: 1;
   }
   @keyframes bouquetFloat {
     0%,100% { transform: translateY(0) rotate(-3deg) scale(1); }
-    50% { transform: translateY(-15px) rotate(3deg) scale(1.05); }
+    50% { transform: translateY(-18px) rotate(3deg) scale(1.05); }
+  }
+  .bouquet-flowers {
+    display: flex; justify-content: center; gap: -10px;
+    margin-bottom: 10px; position: relative;
+  }
+  .bouquet-flowers span {
+    font-size: 3.5rem; display: inline-block;
+    animation: flowerSway 2s ease-in-out infinite;
+    margin: 0 -12px;
+    filter: drop-shadow(0 6px 12px rgba(160,190,130,.3));
+  }
+  .bouquet-flowers span:nth-child(1) { animation-delay: 0s; }
+  .bouquet-flowers span:nth-child(2) { animation-delay: .2s; }
+  .bouquet-flowers span:nth-child(3) { animation-delay: .4s; }
+  .bouquet-flowers span:nth-child(4) { animation-delay: .6s; }
+  .bouquet-flowers span:nth-child(5) { animation-delay: .8s; }
+  @keyframes flowerSway {
+    0%,100% { transform: rotate(-8deg) translateY(0); }
+    50% { transform: rotate(8deg) translateY(-6px); }
   }
   .jasmine-title {
-    font-size: 2.4rem; font-weight: 800; margin: 20px 0 12px;
+    font-size: 2.4rem; font-weight: 800; margin: 16px 0 12px;
     background: linear-gradient(90deg, #8a9f6e, #b8956a, #a8c088, #8a9f6e);
     background-size: 300% auto;
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     animation: shimmer 5s linear infinite;
   }
   @keyframes shimmer { to { background-position: 300% center; } }
-  .jasmine-sub { font-size: 1rem; color: #8a9f6e; font-style: italic; margin-bottom: 30px; }
+  .jasmine-sub { font-size: 1rem; color: #8a9f6e; font-style: italic; margin-bottom: 26px; }
   .jasmine-message {
-    background: rgba(255,255,255,.92); backdrop-filter: blur(15px);
+    background: rgba(255,255,255,.94); backdrop-filter: blur(15px);
     border: 2px solid rgba(200,220,180,.5);
     border-radius: 24px; padding: 32px 28px;
     box-shadow: 0 20px 50px rgba(140,180,100,.2);
     font-size: 1rem; line-height: 2; color: #5a6a52;
-    text-align: center; margin-bottom: 26px;
+    text-align: center; margin-bottom: 24px;
     position: relative;
   }
   .jasmine-message::before {
@@ -373,6 +402,11 @@
     transform: translateX(-50%); font-size: 34px;
     background: #fdfefb; padding: 2px 14px; border-radius: 50px;
   }
+  .jasmine-message h3 {
+    color: #8a9f6e; font-size: 1.15rem; font-weight: 800;
+    margin-bottom: 14px; letter-spacing: .5px;
+  }
+  .jasmine-message p { margin: 10px 0; }
   .jasmine-message .sig {
     display: block; margin-top: 20px;
     color: #8a9f6e; font-style: italic; font-weight: 700;
@@ -380,15 +414,64 @@
   }
   .jasmine-btn {
     padding: 14px 36px; border: none; border-radius: 100px;
-    background: linear-gradient(135deg, #a8c088, #d4c088);
     color: #fff; font-family: 'Comic Sans MS'; font-weight: 800;
     font-size: .95rem; cursor: pointer;
-    box-shadow: 0 8px 22px rgba(160,190,130,.5);
     transition: .3s;
+    margin: 6px;
   }
-  .jasmine-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 30px rgba(160,190,130,.7); }
+  .jasmine-btn.reply {
+    background: linear-gradient(135deg, #a8c088, #d4c088);
+    box-shadow: 0 8px 22px rgba(160,190,130,.5);
+  }
+  .jasmine-btn.reply:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 30px rgba(160,190,130,.7); }
+  .jasmine-btn.exit {
+    background: linear-gradient(135deg, #ff8899, #ff5566);
+    box-shadow: 0 8px 22px rgba(255,85,102,.5);
+  }
+  .jasmine-btn.exit:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 30px rgba(255,85,102,.7); }
+  .jasmine-btn-group { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
-  /* ============ ADMIN PANEL ============ */
+  /* Reply form */
+  .reply-form {
+    background: #fff; border-radius: 22px;
+    padding: 28px 24px; margin-top: 24px;
+    box-shadow: 0 20px 50px rgba(140,180,100,.25);
+    border: 2px solid rgba(200,220,180,.5);
+    display: none;
+    animation: fade .5s ease;
+  }
+  .reply-form.show { display: block; }
+  .reply-form h3 {
+    color: #8a9f6e; font-size: 1.1rem; font-weight: 800;
+    margin-bottom: 14px;
+  }
+  .reply-form textarea {
+    width: 100%; min-height: 110px; resize: vertical;
+    padding: 14px 16px; border: 2px solid rgba(180,210,160,.5);
+    border-radius: 14px; font-family: inherit; font-size: .92rem;
+    color: #4a2c3a; outline: none;
+  }
+  .reply-form textarea:focus { border-color: #a8c088; box-shadow: 0 0 0 4px rgba(168,192,136,.15); }
+  .reply-form .reply-actions { margin-top: 14px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .reply-form .small-btn {
+    padding: 10px 22px; border: none; border-radius: 100px;
+    color: #fff; font-family: 'Comic Sans MS'; font-weight: 800;
+    font-size: .85rem; cursor: pointer;
+  }
+  .reply-form .send-btn { background: linear-gradient(135deg, #a8c088, #d4c088); box-shadow: 0 4px 14px rgba(160,190,130,.5); }
+  .reply-form .cancel-btn { background: linear-gradient(135deg, #999, #777); box-shadow: 0 4px 14px rgba(120,120,120,.4); }
+
+  .reply-sent {
+    text-align: center; padding: 24px;
+    background: linear-gradient(135deg, #f7faf5, #e8f5e0);
+    border-radius: 16px; margin-top: 20px;
+    color: #5a7050; font-weight: 700;
+    animation: fade .5s ease;
+    display: none;
+  }
+  .reply-sent.show { display: block; }
+
+  /* ADMIN */
   #adminTrigger {
     position: fixed; bottom: 20px; right: 20px;
     width: 44px; height: 44px; border-radius: 50%;
@@ -401,7 +484,6 @@
     font-family: inherit;
   }
   #adminTrigger:hover { opacity: 1; transform: scale(1.1) rotate(45deg); background: rgba(168,192,136,.9); color: #fff; }
-
   #adminPanel {
     display: none; position: fixed; inset: 0;
     background: rgba(45,74,45,.65); backdrop-filter: blur(12px);
@@ -443,7 +525,6 @@
   }
   .admin-tab-content { display: none; }
   .admin-tab-content.active { display: block; animation: fade .3s; }
-
   .admin-form {
     background: linear-gradient(135deg, #fafaf2, #f7faf5);
     border: 1.5px dashed rgba(180,210,160,.6);
@@ -461,6 +542,27 @@
   .admin-form input:focus, .admin-form textarea:focus, .admin-form select:focus {
     border-color: #a8c088; box-shadow: 0 0 0 3px rgba(168,192,136,.15);
   }
+  .file-drop {
+    display: block; padding: 20px;
+    background: #fff; border: 2px dashed rgba(168,192,136,.6);
+    border-radius: 14px; text-align: center; cursor: pointer;
+    transition: .2s; margin-bottom: 12px;
+    color: #7a9050; font-size: .85rem; font-weight: 700;
+  }
+  .file-drop:hover { background: #f7faf5; border-color: #a8c088; }
+  .file-drop input[type="file"] { display: none; }
+  .file-drop .fd-icon { font-size: 2rem; display: block; margin-bottom: 6px; }
+  .file-preview {
+    margin-top: 10px; padding: 8px;
+    background: #fff; border-radius: 10px;
+    border: 1.5px solid rgba(180,210,160,.4);
+    font-size: .75rem; color: #5a7050;
+    display: none;
+  }
+  .file-preview.show { display: block; }
+  .file-preview img { max-width: 100%; max-height: 120px; border-radius: 8px; display: block; margin: 4px auto; }
+  .file-preview audio { width: 100%; margin-top: 4px; }
+
   .admin-btn {
     padding: 10px 22px; border: none; border-radius: 100px;
     background: linear-gradient(135deg, #a8c088, #d4c088);
@@ -471,7 +573,6 @@
   .admin-btn:hover { transform: translateY(-2px); }
   .admin-btn.danger { background: linear-gradient(135deg, #ff8888, #e65c5c); box-shadow: 0 4px 14px rgba(230,92,92,.4); }
   .admin-btn.blue { background: linear-gradient(135deg, #88b0ff, #5c7ee6); box-shadow: 0 4px 14px rgba(92,126,230,.4); }
-
   .admin-list {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 12px; margin-top: 16px;
@@ -487,9 +588,10 @@
     background: linear-gradient(135deg, #f0f7e8, #faf5e0);
     background-size: cover; background-position: center;
     display: flex; align-items: center; justify-content: center;
-    font-size: 2rem;
+    font-size: 2rem; overflow: hidden;
   }
-  .admin-item .item-info { font-weight: 700; color: #2d4a2d; font-size: .82rem; }
+  .admin-item .thumb-mini img { width: 100%; height: 100%; object-fit: cover; }
+  .admin-item .item-info { font-weight: 700; color: #2d4a2d; font-size: .82rem; word-break: break-word; }
   .admin-item .item-sub { font-size: .7rem; color: #7a8a72; font-style: italic; }
   .admin-item .item-actions { display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
   .admin-item .mini-btn {
@@ -505,7 +607,6 @@
     margin-bottom: 16px; line-height: 1.6;
   }
 
-  /* Password prompt */
   #pwPrompt {
     display: none; position: fixed; inset: 0;
     background: rgba(45,74,45,.75); backdrop-filter: blur(12px);
@@ -528,11 +629,9 @@
     font-size: 1.4rem; letter-spacing: 8px; font-weight: 800;
     color: #2d4a2d; font-family: inherit; outline: none; margin-bottom: 14px;
   }
-  .pw-box input:focus { border-color: #a8c088; box-shadow: 0 0 0 4px rgba(168,192,136,.15); }
   .pw-error { color: #e65c5c; font-size: .8rem; min-height: 18px; margin-bottom: 12px; font-weight: 700; }
   .pw-actions { display: flex; gap: 10px; justify-content: center; }
 
-  /* Confetti */
   .confetti { position: fixed; top: -20px; font-size: 20px; pointer-events: none; z-index: 9999; animation: confettiFall linear forwards; }
   @keyframes confettiFall {
     0% { transform: translateY(0) rotate(0); opacity: 1; }
@@ -543,6 +642,15 @@
     0% { transform: translateY(0) scale(1); opacity: 1; }
     100% { transform: translateY(80px) scale(.5); opacity: 0; }
   }
+  .progress-badge {
+    position: fixed; top: 30px; right: 30px;
+    background: rgba(255,255,255,.9); backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,180,200,.5);
+    border-radius: 100px; padding: 8px 16px;
+    font-size: .78rem; color: #e63950; font-weight: 700;
+    z-index: 300; font-family: 'Comic Sans MS';
+    box-shadow: 0 6px 18px rgba(230,60,90,.2);
+  }
 
   @media (max-width: 500px) {
     .funny-title { font-size: 1.3rem; }
@@ -550,19 +658,22 @@
     .pill-btn { padding: 12px 32px; font-size: 1rem; }
     .heart-box { width: 110px; height: 110px; }
     .heart-ribbon { font-size: 1.6rem; }
-    .heart-label { font-size: .62rem; }
+    .heart-label { font-size: .62rem; bottom: -18px; }
     .big-clock { width: 240px; height: 240px; }
     .clock-mark { font-size: 14px; }
     .countdown-box .time { font-size: 1.6rem; }
     .heart-modal-inner { padding: 18px; margin: 15px auto; }
-    .jasmine-bouquet { font-size: 5rem; }
+    .jasmine-bouquet { font-size: 6rem; }
     .jasmine-title { font-size: 1.6rem; }
+    .bouquet-flowers span { font-size: 2.4rem; margin: 0 -8px; }
+    .cute-next { width: 60px; height: 60px; font-size: 1.4rem; bottom: 20px; right: 20px; }
+    .progress-badge { top: 20px; right: 15px; font-size: .7rem; padding: 6px 12px; }
   }
 </style>
 </head>
 <body>
 
-<!-- ============ PAGE 1: COUNTDOWN ============ -->
+<!-- PAGE 1: COUNTDOWN -->
 <div class="page active" id="page1">
   <div class="curtain"></div>
   <div class="curtain-top"></div>
@@ -585,7 +696,7 @@
   </div>
 </div>
 
-<!-- ============ PAGE 2: PASSCODE ============ -->
+<!-- PAGE 2: PASSCODE -->
 <div class="page" id="page2">
   <div class="passcode-left">
     <div class="polaroid">
@@ -627,7 +738,7 @@
   </div>
 </div>
 
-<!-- ============ PAGE 3: INTRO ============ -->
+<!-- PAGE 3: INTRO -->
 <div class="page" id="page3">
   <div class="checkered-bg"></div>
   <div class="top-stripe"></div>
@@ -647,7 +758,7 @@
   </div>
 </div>
 
-<!-- ============ PAGE 4: ARE YOU SURE ============ -->
+<!-- PAGE 4: ARE YOU SURE -->
 <div class="page" id="page4">
   <div class="checkered-bg"></div>
   <div class="top-stripe"></div>
@@ -667,7 +778,7 @@
   </div>
 </div>
 
-<!-- ============ PAGE 5: EXCITED ============ -->
+<!-- PAGE 5: EXCITED -->
 <div class="page" id="page5">
   <div class="checkered-bg"></div>
   <div class="top-stripe"></div>
@@ -684,7 +795,7 @@
   </div>
 </div>
 
-<!-- ============ PAGE 6: MYSTERY HEARTS ============ -->
+<!-- PAGE 6: HEARTS -->
 <div class="page" id="page6">
   <div class="checkered-bg"></div>
   <div class="top-stripe"></div>
@@ -692,31 +803,52 @@
   <div class="page-content">
     <h1 class="funny-title" style="font-size:1.5rem;">Tap on the mystery box to unlock your gifts!</h1>
     <div class="boxes-grid" id="heartsGrid"></div>
-    <div class="cartoon-box" style="margin-top:30px;">
+    <div class="cartoon-box" style="margin-top:40px;">
       <div class="cartoon-inner" style="width:180px;height:130px;font-size:5rem;">😋</div>
     </div>
   </div>
+  <button class="cute-next" onclick="nextPage('jasmine')" title="Next → Jasmine Finale">→</button>
 </div>
 
-<!-- ============ PAGE 7: JASMINE FINAL ============ -->
+<!-- PAGE 7: JASMINE FINAL -->
 <div class="page" id="pageJasmine">
   <div class="jasmine-bg-page" id="jasmineBgPage"></div>
   <div class="jasmine-content">
+    <div class="bouquet-flowers">
+      <span>🌼</span><span>🌼</span><span>🌼</span><span>🌼</span><span>🌼</span>
+    </div>
     <div class="jasmine-bouquet">💐</div>
     <h1 class="jasmine-title">🌼 Happy Birthday, My Jasmine 🌼</h1>
     <p class="jasmine-sub">ek chhota sa surprise, dil se tumhare liye</p>
     <div class="jasmine-message">
-      <p>Jabse tum meri zindagi me aayi ho, sab kuch thoda aur khoobsurat lagta hai. 🌼</p>
+      <h3>🌼 Yeh Jasmine Bouquet Tumhare Liye 🌼</h3>
+      <p>Jabse tum meri zindagi me aayi ho, sab kuch thoda aur khoobsurat lagta hai.</p>
       <p>Tumhari muskaan, tumhari baatein, tumhara hona — yeh sab meri favourite cheezein hain.</p>
       <p>21 saal ki tum, aur bhi zyada strong, aur bhi zyada pyaari ho gayi ho.</p>
-      <p>Dua karta hoon ki tumhare saare sapne poore hon, aur tum hamesha muskurati raho. 🌸</p>
+      <p>Dua karta hoon ki tumhare saare sapne poore hon, aur tum hamesha muskurati raho.</p>
+      <p>🌼 Jasmine ki khushbu jaise tumhari zindagi mehekti rahe,<br>har din naya khushi ka phool khilta rahe. 🌸</p>
+      <p style="margin-top:20px;color:#a8c088;font-weight:700;">Healthy friendship ka matlab — ek dusre ka saath, bina kisi shart ke. 🤝💚</p>
       <span class="sig">— always with you, tumhara dost 💚</span>
     </div>
-    <button class="jasmine-btn" onclick="throwConfetti(); celebrateFinale()">🎉 Celebrate Again</button>
+    <div class="jasmine-btn-group">
+      <button class="jasmine-btn reply" onclick="showReplyForm()">💌 Reply Karo</button>
+      <button class="jasmine-btn exit" onclick="exitWebsite()">🚪 Exit</button>
+    </div>
+    <div class="reply-form" id="replyForm">
+      <h3>💌 Apna Reply Likho</h3>
+      <textarea id="replyText" placeholder="Yahan apna pyaara sa reply likho..."></textarea>
+      <div class="reply-actions">
+        <button class="small-btn send-btn" onclick="sendReply()">💚 Send Reply</button>
+        <button class="small-btn cancel-btn" onclick="hideReplyForm()">Cancel</button>
+      </div>
+    </div>
+    <div class="reply-sent" id="replySent">
+      🌼 Thank you! Tumhara reply save ho gaya. 💚
+    </div>
   </div>
 </div>
 
-<!-- ============ HEART MODAL ============ -->
+<!-- HEART MODAL -->
 <div class="heart-modal" id="heartModal" onclick="if(event.target===this) closeHeartModal()">
   <div class="heart-modal-inner">
     <div class="heart-modal-head">
@@ -727,14 +859,12 @@
       <button class="heart-close" onclick="closeHeartModal()">✕ Close</button>
     </div>
     <div class="heart-content-area" id="heartContentArea"></div>
-    <div style="text-align:center;margin-top:20px;" id="heartModalNext"></div>
   </div>
 </div>
 
-<!-- Admin Trigger -->
+<!-- ADMIN -->
 <button id="adminTrigger" onclick="promptAdmin()" title="Admin (Ctrl+Shift+A)">⚙</button>
 
-<!-- Password Prompt -->
 <div id="pwPrompt">
   <div class="pw-box">
     <span class="pw-emoji">🔐</span>
@@ -750,15 +880,14 @@
   </div>
 </div>
 
-<!-- ============ ADMIN PANEL ============ -->
 <div id="adminPanel">
   <div class="admin-box">
     <div class="admin-head">
-      <h2>⚙ Admin Panel</h2>
+      <h2>⚙ Admin Panel — Direct Upload</h2>
       <button class="admin-close" onclick="closeAdmin()">✕ Close</button>
     </div>
     <div class="admin-note">
-      🌼 Yahan se saara content add/edit/delete karo. Har item ko kis heart me dikhana hai woh select karo. Sab browser me save hota hai.
+      🌼 Yahan se **apni files choose karo** (URL ki zarurat nahi). File select karo, heart choose karo, add karo. Sab kuch browser me save hoga.
     </div>
     <div style="margin-bottom:20px;">
       <button class="admin-btn" onclick="exportData()">⬇ Export JSON</button>
@@ -780,9 +909,13 @@
     <!-- PHOTOS -->
     <div class="admin-tab-content active" id="tab-photos">
       <div class="admin-form">
-        <h3>Add Photo</h3>
-        <label>Photo URL</label>
-        <input id="photoUrl" placeholder="https://... ya data:image/...">
+        <h3>📸 Upload Photo</h3>
+        <label class="file-drop">
+          <span class="fd-icon">📁</span>
+          <span id="photoFileName">Tap to choose photo</span>
+          <input type="file" accept="image/*" id="photoFile" onchange="handleFilePreview('photoFile', 'photoPreview', 'image')">
+        </label>
+        <div class="file-preview" id="photoPreview"></div>
         <label>Caption</label>
         <input id="photoCaption" placeholder="Kuch yaadgaar...">
         <label>Kis heart me?</label>
@@ -800,9 +933,13 @@
     <!-- AUDIO -->
     <div class="admin-tab-content" id="tab-audio">
       <div class="admin-form">
-        <h3>Add Audio (Song)</h3>
-        <label>Audio URL</label>
-        <input id="audioUrl" placeholder="https://... ya path/file.mp3">
+        <h3>🎵 Upload Audio</h3>
+        <label class="file-drop">
+          <span class="fd-icon">📁</span>
+          <span id="audioFileName">Tap to choose audio</span>
+          <input type="file" accept="audio/*" id="audioFile" onchange="handleFilePreview('audioFile', 'audioPreview', 'audio')">
+        </label>
+        <div class="file-preview" id="audioPreview"></div>
         <label>Title</label>
         <input id="audioTitle" placeholder="Song ka naam...">
         <label>Artist</label>
@@ -819,14 +956,18 @@
       <div class="admin-list" id="adminAudioList"></div>
     </div>
 
-    <!-- VOICE (4th heart) -->
+    <!-- VOICE -->
     <div class="admin-tab-content" id="tab-voice">
       <div class="admin-form">
-        <h3>🎤 Add Voice Note</h3>
-        <label>Voice URL (mp3/m4a)</label>
-        <input id="voiceUrl" placeholder="https://... ya path/voice.mp3">
+        <h3>🎤 Upload Voice Note</h3>
+        <label class="file-drop">
+          <span class="fd-icon">🎙️</span>
+          <span id="voiceFileName">Tap to choose voice file</span>
+          <input type="file" accept="audio/*" id="voiceFile" onchange="handleFilePreview('voiceFile', 'voicePreview', 'audio')">
+        </label>
+        <div class="file-preview" id="voicePreview"></div>
         <label>Title</label>
-        <input id="voiceTitle" placeholder="Voice ka naam (e.g. Good morning)">
+        <input id="voiceTitle" placeholder="Voice ka naam (Good morning etc.)">
         <label>Description</label>
         <input id="voiceDesc" placeholder="Kis baare me hai...">
         <label>Kis heart me?</label>
@@ -844,9 +985,13 @@
     <!-- VIDEOS -->
     <div class="admin-tab-content" id="tab-videos">
       <div class="admin-form">
-        <h3>Add Video</h3>
-        <label>Video URL (mp4 ya YouTube)</label>
-        <input id="videoUrl" placeholder="https://... (mp4 ya youtube url)">
+        <h3>🎬 Upload Video</h3>
+        <label class="file-drop">
+          <span class="fd-icon">🎬</span>
+          <span id="videoFileName">Tap to choose video</span>
+          <input type="file" accept="video/*" id="videoFile" onchange="handleFilePreview('videoFile', 'videoPreview', 'video')">
+        </label>
+        <div class="file-preview" id="videoPreview"></div>
         <label>Title</label>
         <input id="videoTitle" placeholder="Video ka naam...">
         <label>Description</label>
@@ -866,7 +1011,7 @@
     <!-- SHAYARI -->
     <div class="admin-tab-content" id="tab-shayari">
       <div class="admin-form">
-        <h3>Add Shayari</h3>
+        <h3>🌸 Add Shayari</h3>
         <label>Shayari Text</label>
         <textarea id="shayariText" placeholder="Yahan shayari likho..."></textarea>
         <label>Tag</label>
@@ -890,7 +1035,7 @@
     <!-- NOTES -->
     <div class="admin-tab-content" id="tab-notes">
       <div class="admin-form">
-        <h3>Add Note</h3>
+        <h3>📝 Add Note</h3>
         <label>Category</label>
         <input id="noteCategory" placeholder="Data Analytics, Python...">
         <label>Title</label>
@@ -912,7 +1057,7 @@
     <!-- MESSAGES -->
     <div class="admin-tab-content" id="tab-messages">
       <div class="admin-form">
-        <h3>Add Message</h3>
+        <h3>💌 Add Message</h3>
         <label>Message Text</label>
         <textarea id="msgText" placeholder="Kuch pyaara sa message..."></textarea>
         <label>Kis heart me?</label>
@@ -931,13 +1076,17 @@
     <div class="admin-tab-content" id="tab-settings">
       <div class="admin-form">
         <h3>Passwords</h3>
-        <label>Gift Password (website unlock)</label>
+        <label>Gift Password</label>
         <input id="setGiftPw" placeholder="2604" maxlength="10">
-        <label>Admin Password (this panel)</label>
+        <label>Admin Password</label>
         <input id="setAdminPw" placeholder="1504" maxlength="10">
         <h3 style="margin-top:18px;">Passcode Photo</h3>
-        <label>Photo (emoji, URL, ya local path)</label>
-        <input id="setPasscodePhoto" placeholder="🎂 ya https://... ya photo.jpg">
+        <label class="file-drop">
+          <span class="fd-icon">🖼️</span>
+          <span id="passcodePhotoName">Tap to choose photo</span>
+          <input type="file" accept="image/*" id="passcodePhotoFile" onchange="handlePasscodePhoto(event)">
+        </label>
+        <div class="file-preview" id="passcodePhotoPreview"></div>
         <h3 style="margin-top:18px;">Heart Titles</h3>
         <label>Heart 1 Title</label>
         <input id="setHeart1Title" placeholder="Shayari & Songs 💌">
@@ -945,7 +1094,7 @@
         <input id="setHeart2Title" placeholder="Our Photos 📸">
         <label>Heart 3 Title</label>
         <input id="setHeart3Title" placeholder="Notes & Messages 📝">
-        <label>Heart 4 Title (Voice)</label>
+        <label>Heart 4 Title</label>
         <input id="setHeart4Title" placeholder="Her Voice 🎤">
         <button class="admin-btn" onclick="saveSettings()">💾 Save Settings</button>
       </div>
@@ -956,7 +1105,7 @@
 
 <script>
 /* ============ DATA STORAGE ============ */
-const STORAGE_KEY = 'birthday_surprise_v3';
+const STORAGE_KEY = 'birthday_surprise_v4';
 
 const DEFAULT_DATA = {
   settings: {
@@ -1001,11 +1150,13 @@ function loadData() {
 }
 function saveData() {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(APP_DATA)); }
-  catch(e) { alert('Storage full! Kuch items delete karo ya Export lelo.'); }
+  catch(e) {
+    alert('⚠ Storage full! Kuch items delete karo ya Export lelo.');
+  }
 }
 let APP_DATA = loadData();
 
-/* ============ PAGE NAV ============ */
+/* ============ NAV ============ */
 function nextPage(n) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   let target;
@@ -1014,6 +1165,7 @@ function nextPage(n) {
   if (target) target.classList.add('active');
   if (n === 6) renderHearts();
   if (n === 'jasmine') startJasmineRain();
+  window.scrollTo(0, 0);
 }
 
 /* ============ COUNTDOWN ============ */
@@ -1032,14 +1184,12 @@ function buildClock() {
       const s = document.createElement('span');
       s.className = 'clock-mark';
       s.textContent = num;
-      s.style.left = x + 'px';
-      s.style.top = y + 'px';
+      s.style.left = x + 'px'; s.style.top = y + 'px';
       s.style.transform = 'translate(-50%, -50%)';
       inner.appendChild(s);
     });
   }, 100);
 }
-
 function startCountdown() {
   function getTarget() {
     const now = new Date();
@@ -1069,7 +1219,6 @@ function startCountdown() {
   }
   tick(); setInterval(tick, 1000);
 }
-
 function makeSparkles() {
   const p = document.getElementById('page1');
   if (!p) return;
@@ -1086,7 +1235,6 @@ function makeSparkles() {
 
 /* ============ PASSCODE ============ */
 let enteredDigits = [];
-
 function updateDots() {
   document.querySelectorAll('#passcodeDots .passcode-dot').forEach((d, i) => {
     if (i < enteredDigits.length) {
@@ -1114,7 +1262,6 @@ function submitPasscode() {
   const entered = enteredDigits.join('');
   const giftPw = APP_DATA.settings.giftPassword || '2604';
   const adminPw = APP_DATA.settings.adminPassword || '1504';
-  
   if (entered === giftPw) {
     document.getElementById('errorMsg').textContent = '✓ Unlocked!';
     document.getElementById('errorMsg').style.color = '#c8f5c8';
@@ -1226,13 +1373,8 @@ function renderHearts() {
 function openHeart(num) {
   const modal = document.getElementById('heartModal');
   const title = document.getElementById('heartModalTitle');
-  const sub = document.getElementById('heartModalSub');
   const area = document.getElementById('heartContentArea');
-  const nextBtnArea = document.getElementById('heartModalNext');
-  
   title.textContent = APP_DATA.settings['heart' + num + 'Title'] || ('Mystery Heart ' + num);
-  sub.textContent = 'Here\'s your surprise…';
-  nextBtnArea.innerHTML = '';
   
   const heartPhotos = APP_DATA.photos.filter(p => p.heart == num);
   const heartAudio = APP_DATA.audio.filter(a => a.heart == num);
@@ -1251,116 +1393,38 @@ function openHeart(num) {
   }
   
   let html = '<div class="heart-items-grid">';
-  
-  // Messages
   heartMsgs.forEach(m => {
-    html += `
-      <div class="heart-shayari-card">
-        <div class="heart-shayari-text">${m.text}</div>
-        <div class="heart-shayari-footer">
-          <span></span>
-          <span class="heart-shayari-tag">💌 Message</span>
-        </div>
-      </div>
-    `;
+    html += `<div class="heart-shayari-card"><div class="heart-shayari-text">${m.text}</div><div class="heart-shayari-footer"><span></span><span class="heart-shayari-tag">💌 Message</span></div></div>`;
   });
-  
-  // Shayari
   heartShayari.forEach(s => {
-    html += `
-      <div class="heart-shayari-card">
-        <div class="heart-shayari-text">${s.text}</div>
-        <div class="heart-shayari-footer">
-          <span style="font-size:.72rem;color:#a0496a;font-style:italic;">— from your diary 🌼</span>
-          <span class="heart-shayari-tag"># ${s.tag}</span>
-        </div>
-      </div>
-    `;
+    html += `<div class="heart-shayari-card"><div class="heart-shayari-text">${s.text}</div><div class="heart-shayari-footer"><span style="font-size:.72rem;color:#a0496a;font-style:italic;">— from your diary 🌼</span><span class="heart-shayari-tag"># ${s.tag}</span></div></div>`;
   });
-  
-  // Photos
   heartPhotos.forEach(p => {
-    html += `
-      <div class="heart-item">
-        <div class="heart-item-thumb" style="background-image:url('${p.url}')"></div>
-        <div class="heart-item-info"><h4>${p.caption || 'Memory 🌸'}</h4></div>
-      </div>
-    `;
+    html += `<div class="heart-item"><div class="heart-item-thumb" style="background-image:url('${p.url}')"></div><div class="heart-item-info"><h4>${p.caption || 'Memory 🌸'}</h4></div></div>`;
   });
-  
-  // Audio
   heartAudio.forEach(a => {
-    html += `
-      <div class="heart-item">
-        <div class="heart-item-thumb">🎵</div>
-        <div class="heart-item-info"><h4>${a.title || 'Untitled'}</h4><p>${a.artist || ''}</p></div>
-        <div class="heart-audio-player"><audio controls src="${a.url}" preload="metadata"></audio></div>
-      </div>
-    `;
+    html += `<div class="heart-item"><div class="heart-item-thumb">🎵</div><div class="heart-item-info"><h4>${a.title || 'Untitled'}</h4><p>${a.artist || ''}</p></div><div class="heart-audio-player"><audio controls src="${a.url}" preload="metadata"></audio></div></div>`;
   });
-  
-  // Voice
   heartVoice.forEach(v => {
-    html += `
-      <div class="heart-item" style="border-color:rgba(168,192,136,.6);background:linear-gradient(135deg,#f7faf5,#e8f5e0);">
-        <div class="heart-item-thumb" style="background:linear-gradient(135deg,#e8f5e0,#d4e0c0);font-size:3.5rem;">🎤</div>
-        <div class="heart-item-info"><h4>${v.title || 'Voice Note 🎤'}</h4><p>${v.desc || ''}</p></div>
-        <div class="heart-audio-player"><audio controls src="${v.url}" preload="metadata"></audio></div>
-      </div>
-    `;
+    html += `<div class="heart-item" style="border-color:rgba(168,192,136,.6);background:linear-gradient(135deg,#f7faf5,#e8f5e0);"><div class="heart-item-thumb" style="background:linear-gradient(135deg,#e8f5e0,#d4e0c0);font-size:3.5rem;">🎤</div><div class="heart-item-info"><h4>${v.title || 'Voice Note 🎤'}</h4><p>${v.desc || ''}</p></div><div class="heart-audio-player"><audio controls src="${v.url}" preload="metadata"></audio></div></div>`;
   });
-  
-  // Videos
   heartVideos.forEach(v => {
-    let videoHtml = '';
-    if (v.url.includes('youtube.com') || v.url.includes('youtu.be')) {
-      let vidId = '';
-      if (v.url.includes('v=')) vidId = v.url.split('v=')[1].split('&')[0];
-      else if (v.url.includes('youtu.be/')) vidId = v.url.split('youtu.be/')[1].split('?')[0];
-      videoHtml = `<iframe src="https://www.youtube.com/embed/${vidId}" allowfullscreen style="aspect-ratio:16/9;border:0;"></iframe>`;
-    } else {
-      videoHtml = `<video controls src="${v.url}" preload="metadata"></video>`;
-    }
-    html += `
-      <div class="heart-item heart-video-card">
-        ${videoHtml}
-        <div class="heart-item-info"><h4>${v.title || 'Video 🎬'}</h4><p>${v.desc || ''}</p></div>
-      </div>
-    `;
+    let videoHtml = `<video controls src="${v.url}" preload="metadata"></video>`;
+    html += `<div class="heart-item heart-video-card">${videoHtml}<div class="heart-item-info"><h4>${v.title || 'Video 🎬'}</h4><p>${v.desc || ''}</p></div></div>`;
   });
-  
-  // Notes
   heartNotes.forEach(n => {
-    html += `
-      <div class="heart-shayari-card">
-        <div style="font-size:.72rem;color:#7a9050;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;">${n.category}</div>
-        <div style="font-weight:800;color:#4a2c3a;font-size:.95rem;margin-bottom:8px;">${n.title}</div>
-        <div class="heart-shayari-text">${n.preview}</div>
-      </div>
-    `;
+    html += `<div class="heart-shayari-card"><div style="font-size:.72rem;color:#7a9050;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;">${n.category}</div><div style="font-weight:800;color:#4a2c3a;font-size:.95rem;margin-bottom:8px;">${n.title}</div><div class="heart-shayari-text">${n.preview}</div></div>`;
   });
-  
   html += '</div>';
   area.innerHTML = html;
-  
-  // Show "Jasmine Finale" button if this is Heart 4
-  if (num === 4) {
-    nextBtnArea.innerHTML = `
-      <button class="jasmine-btn" onclick="closeHeartModal(); nextPage('jasmine')" style="margin-top:14px;">
-        🌼 Ek Aakhri Surprise
-      </button>
-    `;
-  }
-  
   modal.classList.add('show');
   throwConfetti();
 }
-
 function closeHeartModal() {
   document.getElementById('heartModal').classList.remove('show');
 }
 
-/* ============ JASMINE FINALE ============ */
+/* ============ JASMINE ============ */
 function startJasmineRain() {
   const bg = document.getElementById('jasmineBgPage');
   if (!bg || bg.dataset.started) return;
@@ -1378,10 +1442,40 @@ function startJasmineRain() {
   }
   throwConfetti();
 }
-function celebrateFinale() {
+
+/* Reply */
+function showReplyForm() {
+  document.getElementById('replyForm').classList.add('show');
+  document.getElementById('replySent').classList.remove('show');
+  setTimeout(() => document.getElementById('replyText').focus(), 300);
+}
+function hideReplyForm() {
+  document.getElementById('replyForm').classList.remove('show');
+}
+function sendReply() {
+  const txt = document.getElementById('replyText').value.trim();
+  if (!txt) { alert('Kuch likho toh sahi! 🌼'); return; }
+  try {
+    const replies = JSON.parse(localStorage.getItem('birthday_replies') || '[]');
+    replies.push({ text: txt, time: new Date().toISOString() });
+    localStorage.setItem('birthday_replies', JSON.stringify(replies));
+  } catch(e) {}
+  document.getElementById('replyForm').classList.remove('show');
+  document.getElementById('replySent').classList.add('show');
+  document.getElementById('replyText').value = '';
   throwConfetti();
-  setTimeout(throwConfetti, 400);
-  setTimeout(throwConfetti, 800);
+}
+function exitWebsite() {
+  if (!confirm('Website se exit karna hai? 🚪')) return;
+  try { window.close(); } catch(e) {}
+  document.body.innerHTML = `
+    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;background:linear-gradient(135deg,#fefefe,#f7faf5,#f0f7f0);font-family:'Comic Sans MS';color:#8a9f6e;text-align:center;padding:30px;">
+      <div style="font-size:6rem;animation:gentleBounce 2s ease-in-out infinite;">🌼</div>
+      <h1 style="color:#8a9f6e;font-size:1.8rem;margin:20px 0;font-weight:800;">Thank you for visiting! 💚</h1>
+      <p style="font-style:italic;font-size:1rem;">Jasmine ki khushbu tumhare saath rahe 🌸</p>
+      <button onclick="location.reload()" style="margin-top:30px;padding:14px 32px;background:linear-gradient(135deg,#a8c088,#d4c088);color:#fff;border:none;border-radius:100px;font-family:inherit;font-weight:800;font-size:.95rem;cursor:pointer;box-shadow:0 8px 22px rgba(160,190,130,.5);">↻ Wapas Kholo</button>
+    </div>
+  `;
 }
 
 /* ============ CONFETTI ============ */
@@ -1421,12 +1515,49 @@ function applySettings() {
   const p = document.getElementById('passcodePhoto');
   if (p) {
     const val = APP_DATA.settings.passcodePhoto || '🎂';
-    if (val.startsWith('http') || val.includes('.')) {
+    if (val.startsWith('data:') || val.startsWith('http') || val.includes('.')) {
       p.innerHTML = `<img src="${val}" alt="photo">`;
     } else {
       p.textContent = val;
     }
   }
+}
+
+/* ============ FILE UPLOAD HELPERS ============ */
+function handleFilePreview(inputId, previewId, type) {
+  const file = document.getElementById(inputId).files[0];
+  const preview = document.getElementById(previewId);
+  if (!file) { preview.classList.remove('show'); preview.innerHTML = ''; return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    const dataUrl = e.target.result;
+    preview.innerHTML = '';
+    if (type === 'image') preview.innerHTML = `<img src="${dataUrl}" alt="preview">`;
+    else if (type === 'audio') preview.innerHTML = `<audio controls src="${dataUrl}"></audio>`;
+    else if (type === 'video') preview.innerHTML = `<video controls src="${dataUrl}" style="max-width:100%;max-height:120px;border-radius:8px;"></video>`;
+    preview.classList.add('show');
+    preview.dataset.url = dataUrl;
+    preview.dataset.name = file.name;
+  };
+  reader.readAsDataURL(file);
+  // Update label
+  const label = document.getElementById(inputId.replace('File','FileName').replace('photoFile','photoFileName').replace('audioFile','audioFileName').replace('voiceFile','voiceFileName').replace('videoFile','videoFileName'));
+  const correctLabel = document.querySelector(`#${inputId}`).parentElement.querySelector('span:nth-child(2)');
+  if (correctLabel) correctLabel.textContent = '✓ ' + file.name;
+}
+
+function handlePasscodePhoto(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const preview = document.getElementById('passcodePhotoPreview');
+    preview.innerHTML = `<img src="${ev.target.result}" alt="preview">`;
+    preview.classList.add('show');
+    preview.dataset.url = ev.target.result;
+    document.querySelector('#passcodePhotoFile').parentElement.querySelector('span:nth-child(2)').textContent = '✓ ' + file.name;
+  };
+  reader.readAsDataURL(file);
 }
 
 /* ============ ADMIN ============ */
@@ -1460,7 +1591,6 @@ function openAdmin() {
   renderAdminLists();
   document.getElementById('setGiftPw').value = APP_DATA.settings.giftPassword;
   document.getElementById('setAdminPw').value = APP_DATA.settings.adminPassword;
-  document.getElementById('setPasscodePhoto').value = APP_DATA.settings.passcodePhoto;
   document.getElementById('setHeart1Title').value = APP_DATA.settings.heart1Title;
   document.getElementById('setHeart2Title').value = APP_DATA.settings.heart2Title;
   document.getElementById('setHeart3Title').value = APP_DATA.settings.heart3Title;
@@ -1476,7 +1606,7 @@ function switchAdminTab(tab, btn) {
 
 function renderAdminLists() {
   const map = {
-    photos: ['url', 'caption', '📸'],
+    photos: ['caption', 'url', '📸'],
     audio: ['title', 'artist', '🎵'],
     voice: ['title', 'desc', '🎤'],
     videos: ['title', 'desc', '🎬'],
@@ -1491,10 +1621,10 @@ function renderAdminLists() {
     APP_DATA[type].forEach((item, i) => {
       const el = document.createElement('div');
       el.className = 'admin-item';
-      const first = (item[map[type][0]] || '').substring(0, 40);
+      const first = (item[map[type][0]] || '(no title)').substring(0, 40);
       const second = (item[map[type][1]] || '');
       let thumbHtml = '';
-      if (type === 'photos') thumbHtml = `<div class="thumb-mini" style="background-image:url('${item.url}')"></div>`;
+      if (type === 'photos') thumbHtml = `<div class="thumb-mini"><img src="${item.url}" alt=""></div>`;
       else thumbHtml = `<div class="thumb-mini">${map[type][2]}</div>`;
       el.innerHTML = `
         ${thumbHtml}
@@ -1508,53 +1638,70 @@ function renderAdminLists() {
   });
 }
 
-/* ADD */
+/* ADD functions */
 function addPhoto() {
-  const url = document.getElementById('photoUrl').value.trim();
+  const fileInput = document.getElementById('photoFile');
+  const file = fileInput.files[0];
+  const preview = document.getElementById('photoPreview');
+  const url = preview.dataset.url;
   const caption = document.getElementById('photoCaption').value.trim();
   const heart = document.getElementById('photoHeart').value;
-  if (!url) { alert('Photo URL daalo!'); return; }
-  APP_DATA.photos.push({ url, caption, heart });
+  if (!url) { alert('Photo choose karo pehle!'); return; }
+  APP_DATA.photos.push({ url, caption: caption || file.name, heart });
   saveData(); renderAdminLists();
-  document.getElementById('photoUrl').value = '';
+  fileInput.value = '';
+  preview.innerHTML = ''; preview.classList.remove('show'); delete preview.dataset.url;
+  document.querySelector('#photoFile').parentElement.querySelector('span:nth-child(2)').textContent = 'Tap to choose photo';
   document.getElementById('photoCaption').value = '';
   alert('✅ Photo added to Heart ' + heart + '!');
 }
 function addAudio() {
-  const url = document.getElementById('audioUrl').value.trim();
+  const file = document.getElementById('audioFile').files[0];
+  const preview = document.getElementById('audioPreview');
+  const url = preview.dataset.url;
   const title = document.getElementById('audioTitle').value.trim();
   const artist = document.getElementById('audioArtist').value.trim();
   const heart = document.getElementById('audioHeart').value;
-  if (!url) { alert('Audio URL daalo!'); return; }
-  APP_DATA.audio.push({ url, title, artist, heart });
+  if (!url) { alert('Audio choose karo pehle!'); return; }
+  APP_DATA.audio.push({ url, title: title || file.name, artist, heart });
   saveData(); renderAdminLists();
-  document.getElementById('audioUrl').value = '';
+  document.getElementById('audioFile').value = '';
+  preview.innerHTML = ''; preview.classList.remove('show'); delete preview.dataset.url;
+  document.querySelector('#audioFile').parentElement.querySelector('span:nth-child(2)').textContent = 'Tap to choose audio';
   document.getElementById('audioTitle').value = '';
   document.getElementById('audioArtist').value = '';
   alert('✅ Audio added to Heart ' + heart + '!');
 }
 function addVoice() {
-  const url = document.getElementById('voiceUrl').value.trim();
+  const file = document.getElementById('voiceFile').files[0];
+  const preview = document.getElementById('voicePreview');
+  const url = preview.dataset.url;
   const title = document.getElementById('voiceTitle').value.trim();
   const desc = document.getElementById('voiceDesc').value.trim();
   const heart = document.getElementById('voiceHeart').value;
-  if (!url) { alert('Voice URL daalo!'); return; }
-  APP_DATA.voice.push({ url, title, desc, heart });
+  if (!url) { alert('Voice file choose karo pehle!'); return; }
+  APP_DATA.voice.push({ url, title: title || file.name, desc, heart });
   saveData(); renderAdminLists();
-  document.getElementById('voiceUrl').value = '';
+  document.getElementById('voiceFile').value = '';
+  preview.innerHTML = ''; preview.classList.remove('show'); delete preview.dataset.url;
+  document.querySelector('#voiceFile').parentElement.querySelector('span:nth-child(2)').textContent = 'Tap to choose voice file';
   document.getElementById('voiceTitle').value = '';
   document.getElementById('voiceDesc').value = '';
   alert('✅ Voice added to Heart ' + heart + '!');
 }
 function addVideo() {
-  const url = document.getElementById('videoUrl').value.trim();
+  const file = document.getElementById('videoFile').files[0];
+  const preview = document.getElementById('videoPreview');
+  const url = preview.dataset.url;
   const title = document.getElementById('videoTitle').value.trim();
   const desc = document.getElementById('videoDesc').value.trim();
   const heart = document.getElementById('videoHeart').value;
-  if (!url) { alert('Video URL daalo!'); return; }
-  APP_DATA.videos.push({ url, title, desc, heart });
+  if (!url) { alert('Video choose karo pehle!'); return; }
+  APP_DATA.videos.push({ url, title: title || file.name, desc, heart });
   saveData(); renderAdminLists();
-  document.getElementById('videoUrl').value = '';
+  document.getElementById('videoFile').value = '';
+  preview.innerHTML = ''; preview.classList.remove('show'); delete preview.dataset.url;
+  document.querySelector('#videoFile').parentElement.querySelector('span:nth-child(2)').textContent = 'Tap to choose video';
   document.getElementById('videoTitle').value = '';
   document.getElementById('videoDesc').value = '';
   alert('✅ Video added to Heart ' + heart + '!');
@@ -1600,7 +1747,9 @@ function deleteItem(type, i) {
 function saveSettings() {
   APP_DATA.settings.giftPassword = document.getElementById('setGiftPw').value.trim() || '2604';
   APP_DATA.settings.adminPassword = document.getElementById('setAdminPw').value.trim() || '1504';
-  APP_DATA.settings.passcodePhoto = document.getElementById('setPasscodePhoto').value.trim() || '🎂';
+  // Passcode photo from file
+  const preview = document.getElementById('passcodePhotoPreview');
+  if (preview.dataset.url) APP_DATA.settings.passcodePhoto = preview.dataset.url;
   APP_DATA.settings.heart1Title = document.getElementById('setHeart1Title').value.trim() || 'Shayari & Songs 💌';
   APP_DATA.settings.heart2Title = document.getElementById('setHeart2Title').value.trim() || 'Our Photos 📸';
   APP_DATA.settings.heart3Title = document.getElementById('setHeart3Title').value.trim() || 'Notes & Messages 📝';
@@ -1610,7 +1759,6 @@ function saveSettings() {
   alert('✅ Settings saved!');
 }
 
-/* EXPORT / IMPORT */
 function exportData() {
   const blob = new Blob([JSON.stringify(APP_DATA, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);

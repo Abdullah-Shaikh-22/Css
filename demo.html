@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Birthday Surprise 🌼</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Comic Sans MS', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #fdf0f5; min-height: 100vh; color: #4a2c3a; overflow-x: hidden;
+  }
+
+  /* ============ PAGE SYSTEM ============ */
+  .page { display: none; min-height: 100vh; width: 100%; position: relative; overflow: hidden; }
+  .page.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+  /* ============ PAGE 1: COUNTDOWN ============ */
+  #page1 { background: #1a0a0a; }
+  .curtain {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(90deg,
+      #4a0a12 0px, #7a1525 15px, #8b1a2b 30px, #5a0f1a 45px,
+      #3a0810 60px, #6b1220 75px, #8b1a2b 90px, #5a0f1a 105px, #4a0a12 120px);
+    filter: brightness(.85);
+  }
+  .curtain::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,.3) 40%, rgba(0,0,0,.75) 100%);
+  }
+  .curtain-top {
+    position: absolute; top: 0; left: 0; right: 0; height: 60px;
+    background: linear-gradient(180deg, #3a0810 0%, #6b1220 60%, #4a0a12 100%);
+    box-shadow: 0 8px 30px rgba(0,0,0,.7); z-index: 3; border-bottom: 2px solid #8b1a2b;
+  }
+  .countdown-content { position: relative; z-index: 5; text-align: center; padding: 20px; }
+
+  .big-clock {
+    width: 320px; height: 320px; margin: 0 auto 30px;
+    border-radius: 50%; background: radial-gradient(circle at 30% 30%, #2a1a3a, #0a0512);
+    border: 8px solid #d4af37;
+    box-shadow: 0 0 0 4px #8a6d1a, 0 0 40px 10px rgba(212,175,55,.5), inset 0 0 60px rgba(212,175,55,.15);
+    position: relative; display: flex; align-items: center; justify-content: center;
+    animation: clockGlow 3s ease-in-out infinite alternate;
+  }
+  @keyframes clockGlow {
+    from { box-shadow: 0 0 0 4px #8a6d1a, 0 0 30px 8px rgba(212,175,55,.4), inset 0 0 60px rgba(212,175,55,.15); }
+    to { box-shadow: 0 0 0 4px #8a6d1a, 0 0 50px 14px rgba(212,175,55,.7), inset 0 0 80px rgba(212,175,55,.25); }
+  }
+  .clock-inner { width: 88%; height: 88%; border-radius: 50%; border: 2px solid rgba(212,175,55,.4); position: relative; }
+  .clock-mark { position: absolute; font-family: Georgia, serif; font-size: 20px; color: #d4af37; font-weight: bold; text-shadow: 0 0 8px rgba(212,175,55,.8); }
+  .clock-hand { position: absolute; left: 50%; bottom: 50%; transform-origin: 50% 100%; background: #d4af37; border-radius: 4px; z-index: 2; }
+  .hand-hour { width: 5px; height: 22%; margin-left: -2.5px; background: #b8941a; }
+  .hand-minute { width: 3px; height: 32%; margin-left: -1.5px; }
+  .hand-second { width: 2px; height: 38%; margin-left: -1px; background: #ff3366; box-shadow: 0 0 10px rgba(255,51,102,.9); }
+  .clock-center-dot { position: absolute; top: 50%; left: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; background: #d4af37; border-radius: 50%; box-shadow: 0 0 15px #d4af37; z-index: 3; }
+
+  .countdown-box {
+    display: inline-block; padding: 16px 40px;
+    background: rgba(10,5,18,.75); border: 3px solid #d4af37; border-radius: 12px;
+    box-shadow: 0 0 30px rgba(212,175,55,.5); margin-bottom: 24px; backdrop-filter: blur(10px);
+  }
+  .countdown-box .label { font-family: Georgia, serif; font-size: .85rem; color: #d4af37; letter-spacing: 4px; margin-bottom: 6px; }
+  .countdown-box .time { font-family: 'Courier New', monospace; font-size: 2.4rem; font-weight: bold; color: #d4af37; letter-spacing: 3px; text-shadow: 0 0 20px rgba(212,175,55,.9); }
+  .countdown-box .sub { font-size: .75rem; color: #b8941a; margin-top: 6px; letter-spacing: 2px; }
+
+  .skip-btn {
+    padding: 12px 32px; background: transparent; color: #d4af37;
+    border: 2px solid #d4af37; border-radius: 100px; font-size: .85rem;
+    font-weight: 700; letter-spacing: 2px; cursor: pointer; font-family: Georgia, serif;
+    transition: .3s; text-transform: uppercase;
+  }
+  .skip-btn:hover { background: #d4af37; color: #1a0a0a; box-shadow: 0 0 30px rgba(212,175,55,.8); }
+  .cd-sparkle { position: absolute; width: 4px; height: 4px; background: #d4af37; border-radius: 50%; box-shadow: 0 0 12px #d4af37; animation: sparkleFloat 4s ease-in-out infinite; z-index: 4; }
+  @keyframes sparkleFloat { 0%,100% { opacity: .3; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.5); } }
+
+  /* ============ PAGE 2: PASSCODE ============ */
+  #page2 { background: #faf6e9; flex-direction: row !important; padding: 0; }
+  @media (max-width: 768px) { #page2 { flex-direction: column !important; } }
+  .passcode-left {
+    flex: 1; background: linear-gradient(135deg, #f0e8d0, #faf6e9);
+    display: flex; align-items: center; justify-content: center;
+    padding: 40px 20px; position: relative; min-height: 100vh;
+  }
+  .polaroid {
+    background: #fff; padding: 20px; border-radius: 8px;
+    border: 10px solid #b8a8d8;
+    box-shadow: 0 20px 50px rgba(100,80,40,.3), 0 0 0 4px #fff inset;
+    transform: rotate(-3deg); position: relative; z-index: 2; max-width: 340px;
+    animation: polaroidFloat 5s ease-in-out infinite;
+  }
+  @keyframes polaroidFloat { 0%,100% { transform: rotate(-3deg) translateY(0); } 50% { transform: rotate(-3deg) translateY(-10px); } }
+  .polaroid .photo {
+    width: 280px; height: 280px; background: linear-gradient(135deg, #f5b7d0, #c9e4ff, #fde5b7);
+    border-radius: 6px; display: flex; align-items: center; justify-content: center;
+    font-size: 8rem; overflow: hidden;
+  }
+  .polaroid .photo img { width: 100%; height: 100%; object-fit: cover; }
+  .polaroid .shinchan { font-size: 8rem; animation: cakeBounce 2s ease-in-out infinite; }
+  @keyframes cakeBounce { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-8px) rotate(3deg); } }
+  .polaroid .caption { text-align: center; font-family: 'Comic Sans MS'; font-size: 1rem; color: #8a6d3a; font-weight: bold; margin-top: 12px; }
+
+  .passcode-right {
+    flex: 1; background: #b8a8d8; display: flex; align-items: center; justify-content: center;
+    padding: 40px 20px; position: relative; min-height: 100vh;
+  }
+  .passcode-box { position: relative; z-index: 2; text-align: center; max-width: 340px; width: 100%; }
+  .passcode-box h2 { font-size: 1.6rem; color: #fff; font-weight: 800; margin-bottom: 6px; text-shadow: 0 2px 8px rgba(80,60,120,.3); }
+  .passcode-box .hint { font-size: .78rem; color: #f0e8f5; opacity: .9; margin-bottom: 26px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .passcode-box .hint .dot { width: 8px; height: 8px; background: #ff5566; border-radius: 50%; animation: pulseDot 1.5s ease-in-out infinite; }
+  @keyframes pulseDot { 0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,85,102,.7); } 50% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(255,85,102,0); } }
+  .passcode-dots { display: flex; justify-content: center; gap: 14px; margin-bottom: 30px; }
+  .passcode-dot {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: rgba(255,255,255,.35); border: 2px solid rgba(255,255,255,.5);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; font-weight: bold; color: #fff;
+    transition: all .3s cubic-bezier(.34,1.56,.64,1);
+  }
+  .passcode-dot.filled { background: #f5e88a; color: #8a6d3a; border-color: #f5e88a; transform: scale(1.08); box-shadow: 0 4px 14px rgba(245,232,138,.6); }
+  .passcode-dot.active { border-color: #fff; background: rgba(255,255,255,.5); animation: dotPulse 1.5s ease-in-out infinite; }
+  @keyframes dotPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,255,255,.6); } 50% { box-shadow: 0 0 0 8px rgba(255,255,255,0); } }
+
+  .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 250px; margin: 0 auto; }
+  .key {
+    aspect-ratio: 1; border-radius: 50%;
+    background: rgba(255,255,255,.95); border: none;
+    font-size: 1.4rem; font-weight: 700; color: #5a4a7a;
+    cursor: pointer; transition: all .2s; font-family: inherit;
+    box-shadow: 0 4px 12px rgba(80,60,120,.2);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .key:hover { background: #fff; transform: scale(1.06); }
+  .key:active { transform: scale(.95); }
+  .key.enter-key { background: linear-gradient(135deg, #ff8899, #ff5566); color: #fff; box-shadow: 0 4px 14px rgba(255,85,102,.5); }
+  .passcode-box.shake { animation: shakeError .5s; }
+  @keyframes shakeError {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-12px); }
+    40% { transform: translateX(12px); }
+    60% { transform: translateX(-8px); }
+    80% { transform: translateX(8px); }
+  }
+  .error-msg { color: #ffd0d0; font-size: .85rem; font-weight: 600; min-height: 22px; margin-top: 16px; text-shadow: 0 2px 6px rgba(120,60,60,.4); }
+
+  /* ============ COMMON ============ */
+  .checkered-bg {
+    position: absolute; inset: 0; z-index: 0; background-color: #fce8f0;
+    background-image: 
+      linear-gradient(90deg, rgba(255,255,255,.5) 50%, transparent 50%),
+      linear-gradient(rgba(255,255,255,.5) 50%, transparent 50%);
+    background-size: 40px 40px;
+  }
+  .top-stripe {
+    position: absolute; top: 0; left: 0; right: 0; height: 20px;
+    background-image: repeating-linear-gradient(90deg, #ff8899 0px, #ff8899 20px, #ffffff 20px, #ffffff 40px);
+    z-index: 10; box-shadow: 0 4px 10px rgba(255,136,153,.3);
+  }
+  .bottom-stripe {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 20px;
+    background-image: repeating-linear-gradient(90deg, #ff8899 0px, #ff8899 20px, #ffffff 20px, #ffffff 40px);
+    z-index: 10; box-shadow: 0 -4px 10px rgba(255,136,153,.3);
+  }
+  .page-content { position: relative; z-index: 5; text-align: center; padding: 40px 20px; max-width: 750px; width: 100%; }
+
+  .funny-title {
+    font-family: 'Comic Sans MS'; font-size: 1.9rem; font-weight: 800;
+    color: #e63950; letter-spacing: .5px; margin-bottom: 24px;
+    text-shadow: 2px 2px 0 rgba(255,255,255,.9), 3px 3px 0 rgba(255,136,153,.3);
+    animation: titleWiggle 3s ease-in-out infinite;
+  }
+  @keyframes titleWiggle { 0%,100% { transform: rotate(-1.5deg); } 50% { transform: rotate(1.5deg); } }
+
+  .cartoon-box {
+    display: inline-block; padding: 12px; background: #fff; border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(200,100,130,.2); margin: 20px auto;
+    animation: gentleBounce 2s ease-in-out infinite; position: relative;
+  }
+  .cartoon-box::before { content: ''; position: absolute; inset: -6px; border: 2px dashed #ffb8c8; border-radius: 20px; }
+  @keyframes gentleBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  .cartoon-inner {
+    width: 240px; height: 240px;
+    background: linear-gradient(135deg, #ffe8f0, #ffd6e0);
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    font-size: 8rem; overflow: hidden;
+  }
+  .cartoon-inner img { width: 100%; height: 100%; object-fit: cover; }
+
+  .btn-row { display: flex; justify-content: center; gap: 30px; margin-top: 26px; flex-wrap: wrap; align-items: center; }
+  .pill-btn {
+    padding: 16px 44px; border-radius: 100px; border: none;
+    font-family: 'Comic Sans MS'; font-size: 1.2rem; font-weight: 800;
+    letter-spacing: 1.5px; cursor: pointer; position: relative;
+    transition: all .3s cubic-bezier(.34,1.56,.64,1);
+    box-shadow: 0 6px 0 #8b2535, 0 10px 20px rgba(200,60,90,.4);
+    color: #fff; background: linear-gradient(180deg, #ff5566, #e63950);
+    text-shadow: 0 2px 4px rgba(140,30,50,.5);
+  }
+  .pill-btn:hover { transform: translateY(3px); box-shadow: 0 3px 0 #8b2535, 0 6px 14px rgba(200,60,90,.4); }
+
+  /* ============ PAGE 5: HEARTS ============ */
+  .boxes-grid { display: flex; justify-content: center; gap: 26px; flex-wrap: wrap; margin: 30px 0; }
+  .heart-box {
+    width: 145px; height: 145px; cursor: pointer; position: relative;
+    transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+    animation: boxBob 2.5s ease-in-out infinite;
+  }
+  .heart-box:nth-child(1) { animation-delay: 0s; }
+  .heart-box:nth-child(2) { animation-delay: .3s; }
+  .heart-box:nth-child(3) { animation-delay: .6s; }
+  .heart-box:nth-child(4) { animation-delay: .9s; }
+  @keyframes boxBob {
+    0%,100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-15px) rotate(2deg); }
+  }
+  .heart-box:hover { transform: scale(1.12); animation-play-state: paused; }
+  .heart-svg { width: 100%; height: 100%; filter: drop-shadow(0 10px 25px rgba(200,40,70,.4)); }
+  .heart-ribbon {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem; color: #fff; pointer-events: none;
+    text-shadow: 0 4px 8px rgba(180,30,60,.5);
+  }
+  .heart-label {
+    position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%);
+    font-size: .72rem; color: #a0496a; font-weight: 700;
+    white-space: nowrap; font-family: 'Comic Sans MS';
+  }
+
+  /* ============ HEART CONTENT MODAL ============ */
+  .heart-modal {
+    display: none; position: fixed; inset: 0;
+    background: rgba(74,44,58,.92); backdrop-filter: blur(10px);
+    z-index: 500; padding: 20px; overflow-y: auto;
+  }
+  .heart-modal.show { display: block; animation: fade .4s ease; }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  .heart-modal-inner {
+    max-width: 900px; margin: 30px auto;
+    background: #fff; border-radius: 24px;
+    padding: 24px; box-shadow: 0 30px 80px rgba(80,40,60,.5);
+    position: relative;
+  }
+  .heart-modal-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px; padding-bottom: 16px;
+    border-bottom: 2px dashed rgba(255,180,200,.5);
+    flex-wrap: wrap; gap: 10px;
+  }
+  .heart-modal-head h2 {
+    font-family: 'Comic Sans MS'; font-size: 1.4rem; color: #e63950;
+    display: flex; align-items: center; gap: 10px; font-weight: 800;
+  }
+  .heart-modal-head p { font-size: .82rem; color: #a0496a; font-style: italic; margin-top: 4px; }
+  .heart-close {
+    padding: 10px 22px; border: none; border-radius: 100px;
+    background: linear-gradient(135deg, #ff5566, #e63950);
+    color: #fff; font-family: 'Comic Sans MS'; font-weight: 800;
+    font-size: .85rem; cursor: pointer;
+    box-shadow: 0 4px 0 #8b2535; transition: .15s;
+  }
+  .heart-close:active { transform: translateY(4px); box-shadow: 0 0 0 #8b2535; }
+  .heart-content-area { min-height: 200px; }
+
+  .heart-empty {
+    text-align: center; padding: 60px 20px; color: #a0496a;
+    font-style: italic; font-size: .95rem;
+    background: linear-gradient(135deg, #fff5f8, #fce8f0);
+    border-radius: 16px; border: 2px dashed rgba(255,180,200,.5);
+  }
+
+  .heart-items-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .heart-item {
+    background: #fff; border: 2px solid rgba(255,180,200,.5);
+    border-radius: 18px; overflow: hidden;
+    box-shadow: 0 4px 16px rgba(200,100,130,.15);
+    transition: .3s;
+  }
+  .heart-item:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(200,100,130,.3); }
+  .heart-item-thumb {
+    height: 160px; background: linear-gradient(135deg, #ffe8f0, #ffd6e0);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; background-size: cover; background-position: center;
+    position: relative; color: #e63950;
+  }
+  .heart-item-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .heart-item-info { padding: 12px 14px; }
+  .heart-item-info h4 { font-size: .88rem; color: #4a2c3a; margin-bottom: 4px; font-weight: 800; }
+  .heart-item-info p { font-size: .74rem; color: #a0496a; line-height: 1.5; }
+
+  .heart-audio-player { padding: 14px; }
+  .heart-audio-player audio { width: 100%; }
+
+  .heart-shayari-card {
+    background: linear-gradient(135deg, #fff5f8, #fce8f0);
+    border: 2px solid rgba(255,180,200,.5); border-radius: 18px;
+    padding: 22px 20px; position: relative;
+  }
+  .heart-shayari-card::before {
+    content: '❝'; position: absolute; top: 8px; right: 14px;
+    font-size: 50px; color: rgba(230,57,80,.15); line-height: 1;
+  }
+  .heart-shayari-text {
+    font-family: Georgia, serif; font-style: italic;
+    font-size: .95rem; line-height: 1.9; color: #4a2c3a;
+    white-space: pre-line; position: relative; z-index: 1;
+  }
+  .heart-shayari-footer {
+    margin-top: 14px; padding-top: 12px;
+    border-top: 1px dashed rgba(255,180,200,.5);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: .72rem;
+  }
+  .heart-shayari-tag {
+    padding: 3px 10px; border-radius: 100px;
+    background: #fce8f0; color: #e63950; font-weight: 700;
+  }
+
+  .heart-video-card video, .heart-video-card iframe {
+    width: 100%; display: block; background: #000;
+  }
+
+  /* ============ JASMINE FINAL PAGE ============ */
+  #pageJasmine { background: linear-gradient(135deg, #fefefe 0%, #f7faf5 40%, #f0f7f0 100%); }
+  .jasmine-bg-page { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .jasmine-fall {
+    position: absolute; top: -80px; font-size: 24px; opacity: 0;
+    animation: jasmineFall linear infinite;
+  }
+  @keyframes jasmineFall {
+    0% { transform: translateY(0) rotate(0) translateX(0); opacity: 0; }
+    8% { opacity: .85; }
+    50% { transform: translateY(50vh) rotate(180deg) translateX(30px); opacity: .7; }
+    90% { opacity: .35; }
+    100% { transform: translateY(110vh) rotate(360deg) translateX(-20px); opacity: 0; }
+  }
+  .jasmine-content {
+    position: relative; z-index: 5; text-align: center; padding: 40px 20px;
+    max-width: 720px;
+  }
+  .jasmine-bouquet {
+    font-size: 8rem; animation: bouquetFloat 3s ease-in-out infinite;
+    filter: drop-shadow(0 15px 30px rgba(160,190,130,.4));
+    display: inline-block;
+  }
+  @keyframes bouquetFloat {
+    0%,100% { transform: translateY(0) rotate(-3deg) scale(1); }
+    50% { transform: translateY(-15px) rotate(3deg) scale(1.05); }
+  }
+  .jasmine-title {
+    font-size: 2.4rem; font-weight: 800; margin: 20px 0 12px;
+    background: linear-gradient(90deg, #8a9f6e, #b8956a, #a8c088, #8a9f6e);
+    background-size: 300% auto;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: shimmer 5s linear infinite;
+  }
+  @keyframes shimmer { to { background-position: 300% center; } }
+  .jasmine-sub { font-size: 1rem; color: #8a9f6e; font-style: italic; margin-bottom: 30px; }
+  .jasmine-message {
+    background: rgba(255,255,255,.92); backdrop-filter: blur(15px);
+    border: 2px solid rgba(200,220,180,.5);
+    border-radius: 24px; padding: 32px 28px;
+    box-shadow: 0 20px 50px rgba(140,180,100,.2);
+    font-size: 1rem; line-height: 2; color: #5a6a52;
+    text-align: center; margin-bottom: 26px;
+    position: relative;
+  }
+  .jasmine-message::before {
+    content: '🌼'; position: absolute; top: -22px; left: 50%;
+    transform: translateX(-50%); font-size: 34px;
+    background: #fdfefb; padding: 2px 14px; border-radius: 50px;
+  }
+  .jasmine-message .sig {
+    display: block; margin-top: 20px;
+    color: #8a9f6e; font-style: italic; font-weight: 700;
+    font-size: .95rem;
+  }
+  .jasmine-btn {
+    padding: 14px 36px; border: none; border-radius: 100px;
+    background: linear-gradient(135deg, #a8c088, #d4c088);
+    color: #fff; font-family: 'Comic Sans MS'; font-weight: 800;
+    font-size: .95rem; cursor: pointer;
+    box-shadow: 0 8px 22px rgba(160,190,130,.5);
+    transition: .3s;
+  }
+  .jasmine-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 30px rgba(160,190,130,.7); }
+
+  /* ============ ADMIN PANEL ============ */
+  #adminTrigger {
+    position: fixed; bottom: 20px; right: 20px;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(168,192,136,.2);
+    border: 1.5px solid rgba(168,192,136,.5);
+    color: #a8c088; font-size: 18px;
+    z-index: 9000; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: .3s; opacity: .25;
+    font-family: inherit;
+  }
+  #adminTrigger:hover { opacity: 1; transform: scale(1.1) rotate(45deg); background: rgba(168,192,136,.9); color: #fff; }
+
+  #adminPanel {
+    display: none; position: fixed; inset: 0;
+    background: rgba(45,74,45,.65); backdrop-filter: blur(12px);
+    z-index: 20000; padding: 20px; overflow-y: auto;
+  }
+  #adminPanel.show { display: block; }
+  .admin-box {
+    max-width: 920px; margin: 20px auto;
+    background: #fff; border-radius: 24px;
+    padding: 28px; box-shadow: 0 30px 80px rgba(80,120,60,.4);
+  }
+  .admin-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px; padding-bottom: 16px;
+    border-bottom: 2px dashed rgba(180,210,160,.5);
+    flex-wrap: wrap; gap: 10px;
+  }
+  .admin-head h2 { font-size: 1.4rem; color: #2d4a2d; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+  .admin-close {
+    padding: 8px 18px; border: none; border-radius: 100px;
+    background: linear-gradient(135deg, #ff8888, #e65c5c);
+    color: #fff; font-family: inherit; font-weight: 700;
+    font-size: .85rem; cursor: pointer;
+  }
+  .admin-tabs {
+    display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap;
+    border-bottom: 1.5px solid rgba(200,220,180,.5); padding-bottom: 12px;
+  }
+  .admin-tab {
+    padding: 8px 14px; border: 1.5px solid rgba(180,210,160,.4);
+    border-radius: 100px; background: #fff; color: #5a7050;
+    font-size: .78rem; font-family: inherit; font-weight: 700;
+    cursor: pointer; transition: .2s;
+  }
+  .admin-tab.active {
+    background: linear-gradient(135deg, #a8c088, #d4c088);
+    color: #fff; border-color: transparent;
+    box-shadow: 0 4px 14px rgba(160,190,130,.4);
+  }
+  .admin-tab-content { display: none; }
+  .admin-tab-content.active { display: block; animation: fade .3s; }
+
+  .admin-form {
+    background: linear-gradient(135deg, #fafaf2, #f7faf5);
+    border: 1.5px dashed rgba(180,210,160,.6);
+    border-radius: 16px; padding: 20px; margin-bottom: 20px;
+  }
+  .admin-form h3 { font-size: .72rem; color: #7a9050; font-weight: 800; margin-bottom: 14px; letter-spacing: 1.2px; text-transform: uppercase; }
+  .admin-form label { display: block; font-size: .75rem; color: #5a7050; font-weight: 700; margin-bottom: 5px; }
+  .admin-form input, .admin-form textarea, .admin-form select {
+    width: 100%; padding: 10px 14px; margin-bottom: 12px;
+    border: 1.5px solid rgba(180,210,160,.5);
+    border-radius: 10px; font-family: inherit; font-size: .85rem;
+    color: #2d4a2d; background: #fff; outline: none;
+  }
+  .admin-form textarea { min-height: 90px; resize: vertical; }
+  .admin-form input:focus, .admin-form textarea:focus, .admin-form select:focus {
+    border-color: #a8c088; box-shadow: 0 0 0 3px rgba(168,192,136,.15);
+  }
+  .admin-btn {
+    padding: 10px 22px; border: none; border-radius: 100px;
+    background: linear-gradient(135deg, #a8c088, #d4c088);
+    color: #fff; font-family: inherit; font-weight: 700;
+    font-size: .82rem; cursor: pointer; margin-right: 8px; margin-top: 4px;
+    box-shadow: 0 4px 14px rgba(160,190,130,.4); transition: .2s;
+  }
+  .admin-btn:hover { transform: translateY(-2px); }
+  .admin-btn.danger { background: linear-gradient(135deg, #ff8888, #e65c5c); box-shadow: 0 4px 14px rgba(230,92,92,.4); }
+  .admin-btn.blue { background: linear-gradient(135deg, #88b0ff, #5c7ee6); box-shadow: 0 4px 14px rgba(92,126,230,.4); }
+
+  .admin-list {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px; margin-top: 16px;
+  }
+  .admin-item {
+    background: #fff; border: 1.5px solid rgba(200,220,180,.5);
+    border-radius: 12px; padding: 12px; position: relative;
+    display: flex; flex-direction: column; gap: 8px;
+    font-size: .78rem; color: #5a7050;
+  }
+  .admin-item .thumb-mini {
+    width: 100%; height: 70px; border-radius: 8px;
+    background: linear-gradient(135deg, #f0f7e8, #faf5e0);
+    background-size: cover; background-position: center;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+  }
+  .admin-item .item-info { font-weight: 700; color: #2d4a2d; font-size: .82rem; }
+  .admin-item .item-sub { font-size: .7rem; color: #7a8a72; font-style: italic; }
+  .admin-item .item-actions { display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
+  .admin-item .mini-btn {
+    padding: 5px 10px; border: 1px solid rgba(200,220,180,.5);
+    border-radius: 100px; background: #f7faf5;
+    color: #5a7050; font-size: .7rem; font-weight: 700;
+    font-family: inherit; cursor: pointer;
+  }
+  .admin-item .mini-btn.del { background: #fff0f0; color: #e65c5c; border-color: #ffcccc; }
+  .admin-note {
+    font-size: .75rem; color: #8a9f6e; font-style: italic;
+    padding: 10px 14px; background: #f7faf5; border-radius: 10px;
+    margin-bottom: 16px; line-height: 1.6;
+  }
+
+  /* Password prompt */
+  #pwPrompt {
+    display: none; position: fixed; inset: 0;
+    background: rgba(45,74,45,.75); backdrop-filter: blur(12px);
+    z-index: 25000; align-items: center; justify-content: center; padding: 20px;
+  }
+  #pwPrompt.show { display: flex; }
+  .pw-box {
+    background: #fff; border-radius: 24px; padding: 36px 32px;
+    max-width: 380px; width: 100%; text-align: center;
+    box-shadow: 0 30px 80px rgba(80,120,60,.4);
+    animation: introPop .5s ease;
+  }
+  @keyframes introPop { from { opacity:0; transform: scale(.9) translateY(20px); } to { opacity:1; transform: scale(1) translateY(0); } }
+  .pw-box .pw-emoji { font-size: 3rem; margin-bottom: 12px; display: block; }
+  .pw-box h3 { color: #2d4a2d; font-size: 1.15rem; margin-bottom: 8px; font-weight: 800; }
+  .pw-box p { color: #8a9f6e; font-size: .82rem; margin-bottom: 20px; font-style: italic; }
+  .pw-box input {
+    width: 100%; padding: 14px 18px; border-radius: 100px;
+    border: 2px solid rgba(180,210,160,.5); text-align: center;
+    font-size: 1.4rem; letter-spacing: 8px; font-weight: 800;
+    color: #2d4a2d; font-family: inherit; outline: none; margin-bottom: 14px;
+  }
+  .pw-box input:focus { border-color: #a8c088; box-shadow: 0 0 0 4px rgba(168,192,136,.15); }
+  .pw-error { color: #e65c5c; font-size: .8rem; min-height: 18px; margin-bottom: 12px; font-weight: 700; }
+  .pw-actions { display: flex; gap: 10px; justify-content: center; }
+
+  /* Confetti */
+  .confetti { position: fixed; top: -20px; font-size: 20px; pointer-events: none; z-index: 9999; animation: confettiFall linear forwards; }
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0); opacity: 1; }
+    100% { transform: translateY(105vh) rotate(720deg); opacity: .6; }
+  }
+  .tear-drop { position: fixed; font-size: 20px; pointer-events: none; z-index: 9999; animation: tearFall 1.5s ease-in forwards; }
+  @keyframes tearFall {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(80px) scale(.5); opacity: 0; }
+  }
+
+  @media (max-width: 500px) {
+    .funny-title { font-size: 1.3rem; }
+    .cartoon-inner { width: 200px; height: 200px; font-size: 6rem; }
+    .pill-btn { padding: 12px 32px; font-size: 1rem; }
+    .heart-box { width: 110px; height: 110px; }
+    .heart-ribbon { font-size: 1.6rem; }
+    .heart-label { font-size: .62rem; }
+    .big-clock { width: 240px; height: 240px; }
+    .clock-mark { font-size: 14px; }
+    .countdown-box .time { font-size: 1.6rem; }
+    .heart-modal-inner { padding: 18px; margin: 15px auto; }
+    .jasmine-bouquet { font-size: 5rem; }
+    .jasmine-title { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1: COUNTDOWN ============ -->
+<div class="page active" id="page1">
+  <div class="curtain"></div>
+  <div class="curtain-top"></div>
+  <div class="countdown-content">
+    <div class="big-clock">
+      <div class="clock-inner" id="clockInner">
+        <div class="clock-hand hand-hour" id="handHour"></div>
+        <div class="clock-hand hand-minute" id="handMinute"></div>
+        <div class="clock-hand hand-second" id="handSecond"></div>
+        <div class="clock-center-dot"></div>
+      </div>
+    </div>
+    <div class="countdown-box">
+      <div class="label">✦ MIDNIGHT COUNTDOWN ✦</div>
+      <div class="time" id="countdownTime">12:00:00</div>
+      <div class="sub">UNTIL THE CLOCK STRIKES 12</div>
+    </div>
+    <br>
+    <button class="skip-btn" onclick="nextPage(2)">Skip to Surprise →</button>
+  </div>
+</div>
+
+<!-- ============ PAGE 2: PASSCODE ============ -->
+<div class="page" id="page2">
+  <div class="passcode-left">
+    <div class="polaroid">
+      <div class="photo">
+        <div class="shinchan" id="passcodePhoto">🎂</div>
+      </div>
+      <div class="caption">Happy Birthday! 🎉</div>
+    </div>
+  </div>
+  <div class="passcode-right">
+    <div class="passcode-box" id="passcodeBox">
+      <h2>Enter a passcode</h2>
+      <div class="hint">
+        Enter the 4-digit secret passcode
+        <span class="dot"></span>
+      </div>
+      <div class="passcode-dots" id="passcodeDots">
+        <div class="passcode-dot active"></div>
+        <div class="passcode-dot"></div>
+        <div class="passcode-dot"></div>
+        <div class="passcode-dot"></div>
+      </div>
+      <div class="keypad">
+        <button class="key" onclick="pressKey(1)">1</button>
+        <button class="key" onclick="pressKey(2)">2</button>
+        <button class="key" onclick="pressKey(3)">3</button>
+        <button class="key" onclick="pressKey(4)">4</button>
+        <button class="key" onclick="pressKey(5)">5</button>
+        <button class="key" onclick="pressKey(6)">6</button>
+        <button class="key" onclick="pressKey(7)">7</button>
+        <button class="key" onclick="pressKey(8)">8</button>
+        <button class="key" onclick="pressKey(9)">9</button>
+        <button class="key" onclick="deleteKey()">✱</button>
+        <button class="key" onclick="pressKey(0)">0</button>
+        <button class="key enter-key" onclick="submitPasscode()">❤</button>
+      </div>
+      <div class="error-msg" id="errorMsg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PAGE 3: INTRO ============ -->
+<div class="page" id="page3">
+  <div class="checkered-bg"></div>
+  <div class="top-stripe"></div>
+  <div class="bottom-stripe"></div>
+  <div class="page-content">
+    <h1 class="funny-title">I have made something for you 💝</h1>
+    <div class="cartoon-box">
+      <div class="cartoon-inner">🤗</div>
+    </div>
+    <p style="font-family:'Comic Sans MS'; color:#a0496a; margin-top:20px; font-size:1.15rem; font-weight:700;">
+      Do you wanna see it ?
+    </p>
+    <div class="btn-row">
+      <button class="pill-btn" onclick="nextPage(4)">YES</button>
+      <button class="pill-btn" onclick="nextPage(4)">NO</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PAGE 4: ARE YOU SURE ============ -->
+<div class="page" id="page4">
+  <div class="checkered-bg"></div>
+  <div class="top-stripe"></div>
+  <div class="bottom-stripe"></div>
+  <div class="page-content">
+    <h1 class="funny-title">I have made something for you 💝</h1>
+    <div class="cartoon-box">
+      <div class="cartoon-inner" id="page4Emoji">😏</div>
+    </div>
+    <p id="page4Msg" style="font-family:'Comic Sans MS'; color:#a0496a; margin-top:20px; font-size:1.1rem; font-weight:700;">
+      Are you sure? 🤔 Please say YES! 💕
+    </p>
+    <div class="btn-row" id="page4BtnRow">
+      <button class="pill-btn" id="yesBtn" onclick="nextPage(5)">YES</button>
+      <button class="pill-btn" id="noBtn" onclick="handleNoClick()">NO</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PAGE 5: EXCITED ============ -->
+<div class="page" id="page5">
+  <div class="checkered-bg"></div>
+  <div class="top-stripe"></div>
+  <div class="bottom-stripe"></div>
+  <div class="page-content">
+    <h1 class="funny-title">Are you really excited? 🤩</h1>
+    <div class="cartoon-box">
+      <div class="cartoon-inner">🤩</div>
+    </div>
+    <div class="btn-row">
+      <button class="pill-btn" onclick="nextPage(6)">YES</button>
+      <button class="pill-btn" onclick="nextPage(6)">YES</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PAGE 6: MYSTERY HEARTS ============ -->
+<div class="page" id="page6">
+  <div class="checkered-bg"></div>
+  <div class="top-stripe"></div>
+  <div class="bottom-stripe"></div>
+  <div class="page-content">
+    <h1 class="funny-title" style="font-size:1.5rem;">Tap on the mystery box to unlock your gifts!</h1>
+    <div class="boxes-grid" id="heartsGrid"></div>
+    <div class="cartoon-box" style="margin-top:30px;">
+      <div class="cartoon-inner" style="width:180px;height:130px;font-size:5rem;">😋</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PAGE 7: JASMINE FINAL ============ -->
+<div class="page" id="pageJasmine">
+  <div class="jasmine-bg-page" id="jasmineBgPage"></div>
+  <div class="jasmine-content">
+    <div class="jasmine-bouquet">💐</div>
+    <h1 class="jasmine-title">🌼 Happy Birthday, My Jasmine 🌼</h1>
+    <p class="jasmine-sub">ek chhota sa surprise, dil se tumhare liye</p>
+    <div class="jasmine-message">
+      <p>Jabse tum meri zindagi me aayi ho, sab kuch thoda aur khoobsurat lagta hai. 🌼</p>
+      <p>Tumhari muskaan, tumhari baatein, tumhara hona — yeh sab meri favourite cheezein hain.</p>
+      <p>21 saal ki tum, aur bhi zyada strong, aur bhi zyada pyaari ho gayi ho.</p>
+      <p>Dua karta hoon ki tumhare saare sapne poore hon, aur tum hamesha muskurati raho. 🌸</p>
+      <span class="sig">— always with you, tumhara dost 💚</span>
+    </div>
+    <button class="jasmine-btn" onclick="throwConfetti(); celebrateFinale()">🎉 Celebrate Again</button>
+  </div>
+</div>
+
+<!-- ============ HEART MODAL ============ -->
+<div class="heart-modal" id="heartModal" onclick="if(event.target===this) closeHeartModal()">
+  <div class="heart-modal-inner">
+    <div class="heart-modal-head">
+      <div>
+        <h2 id="heartModalTitle">💖 Mystery Heart</h2>
+        <p id="heartModalSub">Here's your surprise…</p>
+      </div>
+      <button class="heart-close" onclick="closeHeartModal()">✕ Close</button>
+    </div>
+    <div class="heart-content-area" id="heartContentArea"></div>
+    <div style="text-align:center;margin-top:20px;" id="heartModalNext"></div>
+  </div>
+</div>
+
+<!-- Admin Trigger -->
+<button id="adminTrigger" onclick="promptAdmin()" title="Admin (Ctrl+Shift+A)">⚙</button>
+
+<!-- Password Prompt -->
+<div id="pwPrompt">
+  <div class="pw-box">
+    <span class="pw-emoji">🔐</span>
+    <h3>Admin Access</h3>
+    <p>Enter admin password</p>
+    <input type="password" id="pwInput" maxlength="10" placeholder="••••" 
+           onkeypress="if(event.key==='Enter') verifyPw()">
+    <div class="pw-error" id="pwError"></div>
+    <div class="pw-actions">
+      <button class="admin-btn" onclick="verifyPw()">Unlock</button>
+      <button class="admin-btn danger" onclick="closePwPrompt()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ADMIN PANEL ============ -->
+<div id="adminPanel">
+  <div class="admin-box">
+    <div class="admin-head">
+      <h2>⚙ Admin Panel</h2>
+      <button class="admin-close" onclick="closeAdmin()">✕ Close</button>
+    </div>
+    <div class="admin-note">
+      🌼 Yahan se saara content add/edit/delete karo. Har item ko kis heart me dikhana hai woh select karo. Sab browser me save hota hai.
+    </div>
+    <div style="margin-bottom:20px;">
+      <button class="admin-btn" onclick="exportData()">⬇ Export JSON</button>
+      <button class="admin-btn blue" onclick="document.getElementById('importFile').click()">⬆ Import JSON</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+      <button class="admin-btn danger" onclick="resetAll()">🗑 Reset All</button>
+    </div>
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchAdminTab('photos', this)">📸 Photos</button>
+      <button class="admin-tab" onclick="switchAdminTab('audio', this)">🎵 Audio</button>
+      <button class="admin-tab" onclick="switchAdminTab('voice', this)">🎤 Voice</button>
+      <button class="admin-tab" onclick="switchAdminTab('videos', this)">🎬 Videos</button>
+      <button class="admin-tab" onclick="switchAdminTab('shayari', this)">🌸 Shayari</button>
+      <button class="admin-tab" onclick="switchAdminTab('notes', this)">📝 Notes</button>
+      <button class="admin-tab" onclick="switchAdminTab('messages', this)">💌 Messages</button>
+      <button class="admin-tab" onclick="switchAdminTab('settings', this)">⚙ Settings</button>
+    </div>
+
+    <!-- PHOTOS -->
+    <div class="admin-tab-content active" id="tab-photos">
+      <div class="admin-form">
+        <h3>Add Photo</h3>
+        <label>Photo URL</label>
+        <input id="photoUrl" placeholder="https://... ya data:image/...">
+        <label>Caption</label>
+        <input id="photoCaption" placeholder="Kuch yaadgaar...">
+        <label>Kis heart me?</label>
+        <select id="photoHeart">
+          <option value="1">Heart 1 💖</option>
+          <option value="2" selected>Heart 2 💝</option>
+          <option value="3">Heart 3 💗</option>
+          <option value="4">Heart 4 🎤</option>
+        </select>
+        <button class="admin-btn" onclick="addPhoto()">+ Add Photo</button>
+      </div>
+      <div class="admin-list" id="adminPhotosList"></div>
+    </div>
+
+    <!-- AUDIO -->
+    <div class="admin-tab-content" id="tab-audio">
+      <div class="admin-form">
+        <h3>Add Audio (Song)</h3>
+        <label>Audio URL</label>
+        <input id="audioUrl" placeholder="https://... ya path/file.mp3">
+        <label>Title</label>
+        <input id="audioTitle" placeholder="Song ka naam...">
+        <label>Artist</label>
+        <input id="audioArtist" placeholder="Kiski awaaz...">
+        <label>Kis heart me?</label>
+        <select id="audioHeart">
+          <option value="1" selected>Heart 1 💖</option>
+          <option value="2">Heart 2 💝</option>
+          <option value="3">Heart 3 💗</option>
+          <option value="4">Heart 4 🎤</option>
+        </select>
+        <button class="admin-btn" onclick="addAudio()">+ Add Audio</button>
+      </div>
+      <div class="admin-list" id="adminAudioList"></div>
+    </div>
+
+    <!-- VOICE (4th heart) -->
+    <div class="admin-tab-content" id="tab-voice">
+      <div class="admin-form">
+        <h3>🎤 Add Voice Note</h3>
+        <label>Voice URL (mp3/m4a)</label>
+        <input id="voiceUrl" placeholder="https://... ya path/voice.mp3">
+        <label>Title</label>
+        <input id="voiceTitle" placeholder="Voice ka naam (e.g. Good morning)">
+        <label>Description</label>
+        <input id="voiceDesc" placeholder="Kis baare me hai...">
+        <label>Kis heart me?</label>
+        <select id="voiceHeart">
+          <option value="4" selected>Heart 4 🎤 (Voice)</option>
+          <option value="1">Heart 1 💖</option>
+          <option value="2">Heart 2 💝</option>
+          <option value="3">Heart 3 💗</option>
+        </select>
+        <button class="admin-btn" onclick="addVoice()">+ Add Voice</button>
+      </div>
+      <div class="admin-list" id="adminVoiceList"></div>
+    </div>
+
+    <!-- VIDEOS -->
+    <div class="admin-tab-content" id="tab-videos">
+      <div class="admin-form">
+        <h3>Add Video</h3>
+        <label>Video URL (mp4 ya YouTube)</label>
+        <input id="videoUrl" placeholder="https://... (mp4 ya youtube url)">
+        <label>Title</label>
+        <input id="videoTitle" placeholder="Video ka naam...">
+        <label>Description</label>
+        <input id="videoDesc" placeholder="Kis baare me hai...">
+        <label>Kis heart me?</label>
+        <select id="videoHeart">
+          <option value="1" selected>Heart 1 💖</option>
+          <option value="2">Heart 2 💝</option>
+          <option value="3">Heart 3 💗</option>
+          <option value="4">Heart 4 🎤</option>
+        </select>
+        <button class="admin-btn" onclick="addVideo()">+ Add Video</button>
+      </div>
+      <div class="admin-list" id="adminVideosList"></div>
+    </div>
+
+    <!-- SHAYARI -->
+    <div class="admin-tab-content" id="tab-shayari">
+      <div class="admin-form">
+        <h3>Add Shayari</h3>
+        <label>Shayari Text</label>
+        <textarea id="shayariText" placeholder="Yahan shayari likho..."></textarea>
+        <label>Tag</label>
+        <select id="shayariTag">
+          <option value="sad">Dard 🌧️</option>
+          <option value="dosti">Dosti 🌼</option>
+          <option value="ishq">Ishq 💫</option>
+        </select>
+        <label>Kis heart me?</label>
+        <select id="shayariHeart">
+          <option value="1" selected>Heart 1 💖</option>
+          <option value="2">Heart 2 💝</option>
+          <option value="3">Heart 3 💗</option>
+          <option value="4">Heart 4 🎤</option>
+        </select>
+        <button class="admin-btn" onclick="addShayari()">+ Add Shayari</button>
+      </div>
+      <div class="admin-list" id="adminShayariList"></div>
+    </div>
+
+    <!-- NOTES -->
+    <div class="admin-tab-content" id="tab-notes">
+      <div class="admin-form">
+        <h3>Add Note</h3>
+        <label>Category</label>
+        <input id="noteCategory" placeholder="Data Analytics, Python...">
+        <label>Title</label>
+        <input id="noteTitle" placeholder="Note ka title...">
+        <label>Content</label>
+        <textarea id="notePreview" placeholder="Kuch detail likho..."></textarea>
+        <label>Kis heart me?</label>
+        <select id="noteHeart">
+          <option value="1">Heart 1 💖</option>
+          <option value="2">Heart 2 💝</option>
+          <option value="3" selected>Heart 3 💗</option>
+          <option value="4">Heart 4 🎤</option>
+        </select>
+        <button class="admin-btn" onclick="addNote()">+ Add Note</button>
+      </div>
+      <div class="admin-list" id="adminNotesList"></div>
+    </div>
+
+    <!-- MESSAGES -->
+    <div class="admin-tab-content" id="tab-messages">
+      <div class="admin-form">
+        <h3>Add Message</h3>
+        <label>Message Text</label>
+        <textarea id="msgText" placeholder="Kuch pyaara sa message..."></textarea>
+        <label>Kis heart me?</label>
+        <select id="msgHeart">
+          <option value="1">Heart 1 💖</option>
+          <option value="2">Heart 2 💝</option>
+          <option value="3" selected>Heart 3 💗</option>
+          <option value="4">Heart 4 🎤</option>
+        </select>
+        <button class="admin-btn" onclick="addMessage()">+ Add Message</button>
+      </div>
+      <div class="admin-list" id="adminMessagesList"></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="admin-tab-content" id="tab-settings">
+      <div class="admin-form">
+        <h3>Passwords</h3>
+        <label>Gift Password (website unlock)</label>
+        <input id="setGiftPw" placeholder="2604" maxlength="10">
+        <label>Admin Password (this panel)</label>
+        <input id="setAdminPw" placeholder="1504" maxlength="10">
+        <h3 style="margin-top:18px;">Passcode Photo</h3>
+        <label>Photo (emoji, URL, ya local path)</label>
+        <input id="setPasscodePhoto" placeholder="🎂 ya https://... ya photo.jpg">
+        <h3 style="margin-top:18px;">Heart Titles</h3>
+        <label>Heart 1 Title</label>
+        <input id="setHeart1Title" placeholder="Shayari & Songs 💌">
+        <label>Heart 2 Title</label>
+        <input id="setHeart2Title" placeholder="Our Photos 📸">
+        <label>Heart 3 Title</label>
+        <input id="setHeart3Title" placeholder="Notes & Messages 📝">
+        <label>Heart 4 Title (Voice)</label>
+        <input id="setHeart4Title" placeholder="Her Voice 🎤">
+        <button class="admin-btn" onclick="saveSettings()">💾 Save Settings</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ============ DATA STORAGE ============ */
+const STORAGE_KEY = 'birthday_surprise_v3';
+
+const DEFAULT_DATA = {
+  settings: {
+    giftPassword: '2604',
+    adminPassword: '1504',
+    passcodePhoto: '🎂',
+    heart1Title: 'Shayari & Songs 💌',
+    heart2Title: 'Our Photos 📸',
+    heart3Title: 'Notes & Messages 📝',
+    heart4Title: 'Her Voice 🎤'
+  },
+  photos: [],
+  audio: [],
+  voice: [],
+  videos: [],
+  shayari: [
+    { text:"Ae bewafa kya tujhe zara si bhi sharm aati hai,\nGhadi mujhe gift krke waqt kisi aur ke sath bitati hai.", tag:"sad", heart:"1" },
+    { text:"Aankhon se gale lagalo,\nSene se lagane se pabandiya bohot hai.", tag:"sad", heart:"1" },
+    { text:"Tere baad phir kaha kisi se hasrat rahegi,\nKhamakha! Umra bharr mohobbat se nafrat rahegi.", tag:"sad", heart:"1" },
+    { text:"Maine tera ghar basaya, khudka ghar jalake,\nMaine tujhe hasna sikhaya, khud ke aansu chupake,\nChala gaya woh kahi dur, mujhe akela chodke,\nJise manga tha har sajde me, dekho woh kitna khush hai mujhe bhulake.", tag:"sad", heart:"1" },
+    { text:"Tujhse pehle mai khudko chun lu,\nKahi mai khudgarz toh nhi?\nTujhse kiye wadoon se mukar jau,\nKahi mai bewafa toh nhi?\nAksar jeeta hu apni khayalon me,\nKhayal tumhara hi aaye zaroori toh nahi?\nMat dekh in ummid bhari nigahon se,\nAb pehle si mohobbat humse hoga nhi.", tag:"ishq", heart:"1" },
+    { text:"Logo ki baaton se na kar mere kirdar ka faisla,\nTere umar gujar jaegi meri haqeeqat talashne me.", tag:"ishq", heart:"1" },
+    { text:"Hasrat hai ke unhe qarib se dekhe,\nQarib ho toh aankhein uthai nhi jati.", tag:"ishq", heart:"1" },
+    { text:"Ishq ki pehli hawa suhani hoti hai,\nUske baad barbad puri jawani hoti hai,\nHar ek insan shaukh se shayari nhi likhta,\nUske piche bhi koi kahani hoti hai.", tag:"ishq", heart:"1" },
+    { text:"Kuch rishte khoon ke nahi hote,\nPar khoon se bhi gehere hote hai,\nTu sath hai toh lagta hai,\nHar mushkil se hum guzar sakte hai.", tag:"dosti", heart:"1" },
+    { text:"Muskurate hue jo guzar jate hai,\nWoh pal yaadon me theher jate hai.", tag:"dosti", heart:"1" },
+    { text:"Jaise chameli ki khushbu,\nWaise hi teri yaadein,\nDil me bas jati hai,\nAur hamesha rehti hai.", tag:"dosti", heart:"1" }
+  ],
+  notes: [],
+  messages: []
+};
+
+function loadData() {
+  try {
+    const s = localStorage.getItem(STORAGE_KEY);
+    if (s) {
+      const p = JSON.parse(s);
+      return { ...DEFAULT_DATA, ...p, settings: { ...DEFAULT_DATA.settings, ...(p.settings||{}) } };
+    }
+  } catch(e) {}
+  return JSON.parse(JSON.stringify(DEFAULT_DATA));
+}
+function saveData() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(APP_DATA)); }
+  catch(e) { alert('Storage full! Kuch items delete karo ya Export lelo.'); }
+}
+let APP_DATA = loadData();
+
+/* ============ PAGE NAV ============ */
+function nextPage(n) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  let target;
+  if (n === 'jasmine') target = document.getElementById('pageJasmine');
+  else target = document.getElementById('page' + n);
+  if (target) target.classList.add('active');
+  if (n === 6) renderHearts();
+  if (n === 'jasmine') startJasmineRain();
+}
+
+/* ============ COUNTDOWN ============ */
+function buildClock() {
+  const inner = document.getElementById('clockInner');
+  if (!inner) return;
+  const numerals = ['XII','I','II','III','IV','V','VI','VII','VIII','IX','X','XI'];
+  setTimeout(() => {
+    const w = inner.offsetWidth;
+    const r = w/2 - 26;
+    inner.querySelectorAll('.clock-mark').forEach(m => m.remove());
+    numerals.forEach((num, i) => {
+      const a = (i/12) * Math.PI * 2 - Math.PI/2;
+      const x = w/2 + Math.cos(a) * r;
+      const y = w/2 + Math.sin(a) * r;
+      const s = document.createElement('span');
+      s.className = 'clock-mark';
+      s.textContent = num;
+      s.style.left = x + 'px';
+      s.style.top = y + 'px';
+      s.style.transform = 'translate(-50%, -50%)';
+      inner.appendChild(s);
+    });
+  }, 100);
+}
+
+function startCountdown() {
+  function getTarget() {
+    const now = new Date();
+    const t = new Date(now.getFullYear(), 10, 26, 0, 0, 0);
+    if (t < now) t.setFullYear(t.getFullYear() + 1);
+    return t;
+  }
+  function tick() {
+    const now = new Date();
+    const target = getTarget();
+    const diff = target - now;
+    const h = now.getHours() % 12;
+    const m = now.getMinutes();
+    const s = now.getSeconds();
+    const hEl = document.getElementById('handHour');
+    const mEl = document.getElementById('handMinute');
+    const sEl = document.getElementById('handSecond');
+    if (hEl) hEl.style.transform = `rotate(${(h + m/60) * 30}deg)`;
+    if (mEl) mEl.style.transform = `rotate(${(m + s/60) * 6}deg)`;
+    if (sEl) sEl.style.transform = `rotate(${s * 6}deg)`;
+    let ts = Math.max(0, Math.floor(diff/1000));
+    const hh = Math.floor(ts/3600); ts %= 3600;
+    const mm = Math.floor(ts/60); const ss = ts % 60;
+    const el = document.getElementById('countdownTime');
+    if (el) el.textContent = `${hh.toString().padStart(2,'0')}:${mm.toString().padStart(2,'0')}:${ss.toString().padStart(2,'0')}`;
+    if (diff <= 0 && el) el.textContent = '🎉 IT\'S TIME! 🎉';
+  }
+  tick(); setInterval(tick, 1000);
+}
+
+function makeSparkles() {
+  const p = document.getElementById('page1');
+  if (!p) return;
+  for (let i = 0; i < 30; i++) {
+    const s = document.createElement('div');
+    s.className = 'cd-sparkle';
+    s.style.left = Math.random()*100 + '%';
+    s.style.top = Math.random()*100 + '%';
+    s.style.animationDelay = (Math.random()*4) + 's';
+    s.style.animationDuration = (2 + Math.random()*3) + 's';
+    p.appendChild(s);
+  }
+}
+
+/* ============ PASSCODE ============ */
+let enteredDigits = [];
+
+function updateDots() {
+  document.querySelectorAll('#passcodeDots .passcode-dot').forEach((d, i) => {
+    if (i < enteredDigits.length) {
+      d.classList.add('filled'); d.classList.remove('active');
+      d.textContent = '•';
+    } else {
+      d.classList.remove('filled'); d.textContent = '';
+      if (i === enteredDigits.length) d.classList.add('active');
+      else d.classList.remove('active');
+    }
+  });
+}
+function pressKey(n) {
+  if (enteredDigits.length >= 4) return;
+  enteredDigits.push(n); updateDots();
+  document.getElementById('errorMsg').textContent = '';
+  if (enteredDigits.length === 4) setTimeout(submitPasscode, 250);
+}
+function deleteKey() {
+  enteredDigits.pop(); updateDots();
+  document.getElementById('errorMsg').textContent = '';
+}
+function submitPasscode() {
+  if (enteredDigits.length < 4) return;
+  const entered = enteredDigits.join('');
+  const giftPw = APP_DATA.settings.giftPassword || '2604';
+  const adminPw = APP_DATA.settings.adminPassword || '1504';
+  
+  if (entered === giftPw) {
+    document.getElementById('errorMsg').textContent = '✓ Unlocked!';
+    document.getElementById('errorMsg').style.color = '#c8f5c8';
+    setTimeout(() => {
+      enteredDigits = []; updateDots();
+      document.getElementById('errorMsg').textContent = '';
+      document.getElementById('errorMsg').style.color = '#ffd0d0';
+      nextPage(3);
+      throwConfetti();
+    }, 500);
+  } else if (entered === adminPw) {
+    document.getElementById('errorMsg').textContent = '⚙ Admin unlocked!';
+    document.getElementById('errorMsg').style.color = '#ffe6a0';
+    setTimeout(() => {
+      enteredDigits = []; updateDots();
+      document.getElementById('errorMsg').textContent = '';
+      document.getElementById('errorMsg').style.color = '#ffd0d0';
+      openAdmin();
+    }, 500);
+  } else {
+    document.getElementById('passcodeBox').classList.add('shake');
+    document.getElementById('errorMsg').textContent = '✗ Wrong passcode, try again';
+    setTimeout(() => {
+      document.getElementById('passcodeBox').classList.remove('shake');
+      enteredDigits = []; updateDots();
+    }, 600);
+  }
+}
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('page2').classList.contains('active')) return;
+  if (e.key >= '0' && e.key <= '9') pressKey(parseInt(e.key));
+  else if (e.key === 'Backspace') deleteKey();
+  else if (e.key === 'Enter') submitPasscode();
+});
+
+/* ============ NO BUTTON ============ */
+let noCount = 0;
+function handleNoClick() {
+  noCount++;
+  const yes = document.getElementById('yesBtn');
+  const no = document.getElementById('noBtn');
+  const yesScale = 1 + noCount * 0.4;
+  yes.style.transform = `scale(${yesScale})`;
+  yes.style.fontSize = (1.2 + noCount * 0.3) + 'rem';
+  yes.style.padding = (16 + noCount * 14) + 'px ' + (44 + noCount * 28) + 'px';
+  const noScale = Math.max(0.3, 1 - noCount * 0.18);
+  no.style.transform = `scale(${noScale})`;
+  no.style.fontSize = Math.max(0.5, 1.2 - noCount * 0.15) + 'rem';
+  no.style.opacity = Math.max(0.2, 1 - noCount * 0.22);
+  const emojis = ['😏', '😢', '😭', '😭😭', '🥺😭', '😭💔', '😭😭😭'];
+  document.getElementById('page4Emoji').textContent = emojis[Math.min(noCount, emojis.length - 1)];
+  for (let i = 0; i < 6; i++) {
+    setTimeout(() => {
+      const t = document.createElement('div');
+      t.className = 'tear-drop';
+      t.textContent = '💧';
+      t.style.left = (25 + Math.random()*50) + '%';
+      t.style.top = (25 + Math.random()*25) + '%';
+      t.style.fontSize = (14 + Math.random()*10) + 'px';
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 1600);
+    }, i * 70);
+  }
+  const msgs = [
+    '😢 Are you sure?',
+    '😭 Please try again…',
+    '💔 Yeh toh galat baat hai!',
+    '😭😭 Please say YES!',
+    '😭 Bas karo, YES daba do!',
+    '😭😭😭 YES itna bada ho gaya!'
+  ];
+  document.getElementById('page4Msg').textContent = msgs[Math.min(noCount - 1, msgs.length - 1)];
+  if (noCount >= 5) setTimeout(() => nextPage(5), 1200);
+}
+
+/* ============ HEARTS ============ */
+function renderHearts() {
+  const grid = document.getElementById('heartsGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  const titles = [
+    APP_DATA.settings.heart1Title,
+    APP_DATA.settings.heart2Title,
+    APP_DATA.settings.heart3Title,
+    APP_DATA.settings.heart4Title
+  ];
+  const hearts = ['💖','💝','💗','🎤'];
+  for (let i = 1; i <= 4; i++) {
+    const box = document.createElement('div');
+    box.className = 'heart-box';
+    box.innerHTML = `
+      <svg class="heart-svg" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="hg${i}" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#ff5566"/>
+            <stop offset="100%" style="stop-color:#b02235"/>
+          </linearGradient>
+        </defs>
+        <path d="M50,88 C20,68 5,50 5,32 C5,18 17,10 28,10 C37,10 45,16 50,26 C55,16 63,10 72,10 C83,10 95,18 95,32 C95,50 80,68 50,88 Z" fill="url(#hg${i})" stroke="#8b2535" stroke-width="1"/>
+      </svg>
+      <div class="heart-ribbon">🎀</div>
+      <div class="heart-label">${hearts[i-1]} ${titles[i-1] || ('Heart ' + i)}</div>
+    `;
+    box.onclick = () => openHeart(i);
+    grid.appendChild(box);
+  }
+}
+
+function openHeart(num) {
+  const modal = document.getElementById('heartModal');
+  const title = document.getElementById('heartModalTitle');
+  const sub = document.getElementById('heartModalSub');
+  const area = document.getElementById('heartContentArea');
+  const nextBtnArea = document.getElementById('heartModalNext');
+  
+  title.textContent = APP_DATA.settings['heart' + num + 'Title'] || ('Mystery Heart ' + num);
+  sub.textContent = 'Here\'s your surprise…';
+  nextBtnArea.innerHTML = '';
+  
+  const heartPhotos = APP_DATA.photos.filter(p => p.heart == num);
+  const heartAudio = APP_DATA.audio.filter(a => a.heart == num);
+  const heartVoice = APP_DATA.voice.filter(v => v.heart == num);
+  const heartVideos = APP_DATA.videos.filter(v => v.heart == num);
+  const heartShayari = APP_DATA.shayari.filter(s => s.heart == num);
+  const heartNotes = APP_DATA.notes.filter(n => n.heart == num);
+  const heartMsgs = APP_DATA.messages.filter(m => m.heart == num);
+  
+  const total = heartPhotos.length + heartAudio.length + heartVoice.length + heartVideos.length + heartShayari.length + heartNotes.length + heartMsgs.length;
+  
+  if (total === 0) {
+    area.innerHTML = '<div class="heart-empty">🌼 Abhi is heart me kuch nahi hai. Admin panel se add karo!</div>';
+    modal.classList.add('show');
+    return;
+  }
+  
+  let html = '<div class="heart-items-grid">';
+  
+  // Messages
+  heartMsgs.forEach(m => {
+    html += `
+      <div class="heart-shayari-card">
+        <div class="heart-shayari-text">${m.text}</div>
+        <div class="heart-shayari-footer">
+          <span></span>
+          <span class="heart-shayari-tag">💌 Message</span>
+        </div>
+      </div>
+    `;
+  });
+  
+  // Shayari
+  heartShayari.forEach(s => {
+    html += `
+      <div class="heart-shayari-card">
+        <div class="heart-shayari-text">${s.text}</div>
+        <div class="heart-shayari-footer">
+          <span style="font-size:.72rem;color:#a0496a;font-style:italic;">— from your diary 🌼</span>
+          <span class="heart-shayari-tag"># ${s.tag}</span>
+        </div>
+      </div>
+    `;
+  });
+  
+  // Photos
+  heartPhotos.forEach(p => {
+    html += `
+      <div class="heart-item">
+        <div class="heart-item-thumb" style="background-image:url('${p.url}')"></div>
+        <div class="heart-item-info"><h4>${p.caption || 'Memory 🌸'}</h4></div>
+      </div>
+    `;
+  });
+  
+  // Audio
+  heartAudio.forEach(a => {
+    html += `
+      <div class="heart-item">
+        <div class="heart-item-thumb">🎵</div>
+        <div class="heart-item-info"><h4>${a.title || 'Untitled'}</h4><p>${a.artist || ''}</p></div>
+        <div class="heart-audio-player"><audio controls src="${a.url}" preload="metadata"></audio></div>
+      </div>
+    `;
+  });
+  
+  // Voice
+  heartVoice.forEach(v => {
+    html += `
+      <div class="heart-item" style="border-color:rgba(168,192,136,.6);background:linear-gradient(135deg,#f7faf5,#e8f5e0);">
+        <div class="heart-item-thumb" style="background:linear-gradient(135deg,#e8f5e0,#d4e0c0);font-size:3.5rem;">🎤</div>
+        <div class="heart-item-info"><h4>${v.title || 'Voice Note 🎤'}</h4><p>${v.desc || ''}</p></div>
+        <div class="heart-audio-player"><audio controls src="${v.url}" preload="metadata"></audio></div>
+      </div>
+    `;
+  });
+  
+  // Videos
+  heartVideos.forEach(v => {
+    let videoHtml = '';
+    if (v.url.includes('youtube.com') || v.url.includes('youtu.be')) {
+      let vidId = '';
+      if (v.url.includes('v=')) vidId = v.url.split('v=')[1].split('&')[0];
+      else if (v.url.includes('youtu.be/')) vidId = v.url.split('youtu.be/')[1].split('?')[0];
+      videoHtml = `<iframe src="https://www.youtube.com/embed/${vidId}" allowfullscreen style="aspect-ratio:16/9;border:0;"></iframe>`;
+    } else {
+      videoHtml = `<video controls src="${v.url}" preload="metadata"></video>`;
+    }
+    html += `
+      <div class="heart-item heart-video-card">
+        ${videoHtml}
+        <div class="heart-item-info"><h4>${v.title || 'Video 🎬'}</h4><p>${v.desc || ''}</p></div>
+      </div>
+    `;
+  });
+  
+  // Notes
+  heartNotes.forEach(n => {
+    html += `
+      <div class="heart-shayari-card">
+        <div style="font-size:.72rem;color:#7a9050;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;">${n.category}</div>
+        <div style="font-weight:800;color:#4a2c3a;font-size:.95rem;margin-bottom:8px;">${n.title}</div>
+        <div class="heart-shayari-text">${n.preview}</div>
+      </div>
+    `;
+  });
+  
+  html += '</div>';
+  area.innerHTML = html;
+  
+  // Show "Jasmine Finale" button if this is Heart 4
+  if (num === 4) {
+    nextBtnArea.innerHTML = `
+      <button class="jasmine-btn" onclick="closeHeartModal(); nextPage('jasmine')" style="margin-top:14px;">
+        🌼 Ek Aakhri Surprise
+      </button>
+    `;
+  }
+  
+  modal.classList.add('show');
+  throwConfetti();
+}
+
+function closeHeartModal() {
+  document.getElementById('heartModal').classList.remove('show');
+}
+
+/* ============ JASMINE FINALE ============ */
+function startJasmineRain() {
+  const bg = document.getElementById('jasmineBgPage');
+  if (!bg || bg.dataset.started) return;
+  bg.dataset.started = '1';
+  const icons = ['🌼','💮','🤍','🌿','✨','🍃','🌸'];
+  for (let i = 0; i < 35; i++) {
+    const j = document.createElement('div');
+    j.className = 'jasmine-fall';
+    j.textContent = icons[Math.floor(Math.random()*icons.length)];
+    j.style.left = Math.random()*100 + '%';
+    j.style.animationDuration = (10 + Math.random()*12) + 's';
+    j.style.animationDelay = (Math.random()*15) + 's';
+    j.style.fontSize = (16 + Math.random()*18) + 'px';
+    bg.appendChild(j);
+  }
+  throwConfetti();
+}
+function celebrateFinale() {
+  throwConfetti();
+  setTimeout(throwConfetti, 400);
+  setTimeout(throwConfetti, 800);
+}
+
+/* ============ CONFETTI ============ */
+function throwConfetti() {
+  const colors = ['#ff5c8d','#ffd166','#a8c088','#d4c088','#b266ff','#ff8899'];
+  const shapes = ['🎉','🎊','🌼','✨','💖','🎈','🎂','🌸'];
+  for (let i = 0; i < 40; i++) {
+    setTimeout(() => {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random()*100 + 'vw';
+      c.style.background = colors[Math.floor(Math.random()*colors.length)];
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      c.style.width = (6 + Math.random()*8) + 'px';
+      c.style.height = (8 + Math.random()*12) + 'px';
+      c.style.animationDuration = (3 + Math.random()*3) + 's';
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 7000);
+    }, i*25);
+  }
+  for (let i = 0; i < 12; i++) {
+    setTimeout(() => {
+      const e = document.createElement('div');
+      e.className = 'confetti';
+      e.textContent = shapes[Math.floor(Math.random()*shapes.length)];
+      e.style.left = Math.random()*100 + 'vw';
+      e.style.fontSize = (18 + Math.random()*14) + 'px';
+      e.style.animationDuration = (3 + Math.random()*3) + 's';
+      document.body.appendChild(e);
+      setTimeout(() => e.remove(), 7000);
+    }, i*70);
+  }
+}
+
+/* ============ SETTINGS APPLY ============ */
+function applySettings() {
+  const p = document.getElementById('passcodePhoto');
+  if (p) {
+    const val = APP_DATA.settings.passcodePhoto || '🎂';
+    if (val.startsWith('http') || val.includes('.')) {
+      p.innerHTML = `<img src="${val}" alt="photo">`;
+    } else {
+      p.textContent = val;
+    }
+  }
+}
+
+/* ============ ADMIN ============ */
+function promptAdmin() {
+  document.getElementById('pwPrompt').classList.add('show');
+  document.getElementById('pwInput').value = '';
+  document.getElementById('pwError').textContent = '';
+  setTimeout(() => document.getElementById('pwInput').focus(), 100);
+}
+function closePwPrompt() { document.getElementById('pwPrompt').classList.remove('show'); }
+function verifyPw() {
+  const entered = document.getElementById('pwInput').value.trim();
+  const correct = APP_DATA.settings.adminPassword || '1504';
+  if (entered === correct) { closePwPrompt(); openAdmin(); }
+  else {
+    document.getElementById('pwError').textContent = '❌ Wrong admin password';
+    document.getElementById('pwInput').value = '';
+  }
+}
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a') {
+    e.preventDefault();
+    if (document.getElementById('adminPanel').classList.contains('show')) closeAdmin();
+    else promptAdmin();
+  }
+  if (e.key === 'Escape') { closePwPrompt(); closeAdmin(); closeHeartModal(); }
+});
+
+function openAdmin() {
+  document.getElementById('adminPanel').classList.add('show');
+  renderAdminLists();
+  document.getElementById('setGiftPw').value = APP_DATA.settings.giftPassword;
+  document.getElementById('setAdminPw').value = APP_DATA.settings.adminPassword;
+  document.getElementById('setPasscodePhoto').value = APP_DATA.settings.passcodePhoto;
+  document.getElementById('setHeart1Title').value = APP_DATA.settings.heart1Title;
+  document.getElementById('setHeart2Title').value = APP_DATA.settings.heart2Title;
+  document.getElementById('setHeart3Title').value = APP_DATA.settings.heart3Title;
+  document.getElementById('setHeart4Title').value = APP_DATA.settings.heart4Title;
+}
+function closeAdmin() { document.getElementById('adminPanel').classList.remove('show'); }
+function switchAdminTab(tab, btn) {
+  document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+
+function renderAdminLists() {
+  const map = {
+    photos: ['url', 'caption', '📸'],
+    audio: ['title', 'artist', '🎵'],
+    voice: ['title', 'desc', '🎤'],
+    videos: ['title', 'desc', '🎬'],
+    shayari: ['text', 'tag', '🌸'],
+    notes: ['title', 'category', '📝'],
+    messages: ['text', '', '💌']
+  };
+  Object.keys(map).forEach(type => {
+    const list = document.getElementById('admin' + type.charAt(0).toUpperCase() + type.slice(1) + 'List');
+    if (!list) return;
+    list.innerHTML = '';
+    APP_DATA[type].forEach((item, i) => {
+      const el = document.createElement('div');
+      el.className = 'admin-item';
+      const first = (item[map[type][0]] || '').substring(0, 40);
+      const second = (item[map[type][1]] || '');
+      let thumbHtml = '';
+      if (type === 'photos') thumbHtml = `<div class="thumb-mini" style="background-image:url('${item.url}')"></div>`;
+      else thumbHtml = `<div class="thumb-mini">${map[type][2]}</div>`;
+      el.innerHTML = `
+        ${thumbHtml}
+        <div class="item-info">${first}${first.length >= 40 ? '...' : ''}</div>
+        <div class="item-sub">${second} • Heart ${item.heart}</div>
+        <div class="item-actions">
+          <button class="mini-btn del" onclick="deleteItem('${type}', ${i})">🗑 Delete</button>
+        </div>`;
+      list.appendChild(el);
+    });
+  });
+}
+
+/* ADD */
+function addPhoto() {
+  const url = document.getElementById('photoUrl').value.trim();
+  const caption = document.getElementById('photoCaption').value.trim();
+  const heart = document.getElementById('photoHeart').value;
+  if (!url) { alert('Photo URL daalo!'); return; }
+  APP_DATA.photos.push({ url, caption, heart });
+  saveData(); renderAdminLists();
+  document.getElementById('photoUrl').value = '';
+  document.getElementById('photoCaption').value = '';
+  alert('✅ Photo added to Heart ' + heart + '!');
+}
+function addAudio() {
+  const url = document.getElementById('audioUrl').value.trim();
+  const title = document.getElementById('audioTitle').value.trim();
+  const artist = document.getElementById('audioArtist').value.trim();
+  const heart = document.getElementById('audioHeart').value;
+  if (!url) { alert('Audio URL daalo!'); return; }
+  APP_DATA.audio.push({ url, title, artist, heart });
+  saveData(); renderAdminLists();
+  document.getElementById('audioUrl').value = '';
+  document.getElementById('audioTitle').value = '';
+  document.getElementById('audioArtist').value = '';
+  alert('✅ Audio added to Heart ' + heart + '!');
+}
+function addVoice() {
+  const url = document.getElementById('voiceUrl').value.trim();
+  const title = document.getElementById('voiceTitle').value.trim();
+  const desc = document.getElementById('voiceDesc').value.trim();
+  const heart = document.getElementById('voiceHeart').value;
+  if (!url) { alert('Voice URL daalo!'); return; }
+  APP_DATA.voice.push({ url, title, desc, heart });
+  saveData(); renderAdminLists();
+  document.getElementById('voiceUrl').value = '';
+  document.getElementById('voiceTitle').value = '';
+  document.getElementById('voiceDesc').value = '';
+  alert('✅ Voice added to Heart ' + heart + '!');
+}
+function addVideo() {
+  const url = document.getElementById('videoUrl').value.trim();
+  const title = document.getElementById('videoTitle').value.trim();
+  const desc = document.getElementById('videoDesc').value.trim();
+  const heart = document.getElementById('videoHeart').value;
+  if (!url) { alert('Video URL daalo!'); return; }
+  APP_DATA.videos.push({ url, title, desc, heart });
+  saveData(); renderAdminLists();
+  document.getElementById('videoUrl').value = '';
+  document.getElementById('videoTitle').value = '';
+  document.getElementById('videoDesc').value = '';
+  alert('✅ Video added to Heart ' + heart + '!');
+}
+function addShayari() {
+  const text = document.getElementById('shayariText').value.trim();
+  const tag = document.getElementById('shayariTag').value;
+  const heart = document.getElementById('shayariHeart').value;
+  if (!text) { alert('Shayari likho!'); return; }
+  APP_DATA.shayari.push({ text, tag, heart });
+  saveData(); renderAdminLists();
+  document.getElementById('shayariText').value = '';
+  alert('✅ Shayari added to Heart ' + heart + '!');
+}
+function addNote() {
+  const category = document.getElementById('noteCategory').value.trim();
+  const title = document.getElementById('noteTitle').value.trim();
+  const preview = document.getElementById('notePreview').value.trim();
+  const heart = document.getElementById('noteHeart').value;
+  if (!category || !title) { alert('Category aur title daalo!'); return; }
+  APP_DATA.notes.push({ category, title, preview, heart });
+  saveData(); renderAdminLists();
+  document.getElementById('noteCategory').value = '';
+  document.getElementById('noteTitle').value = '';
+  document.getElementById('notePreview').value = '';
+  alert('✅ Note added to Heart ' + heart + '!');
+}
+function addMessage() {
+  const text = document.getElementById('msgText').value.trim();
+  const heart = document.getElementById('msgHeart').value;
+  if (!text) { alert('Message likho!'); return; }
+  APP_DATA.messages.push({ text, heart });
+  saveData(); renderAdminLists();
+  document.getElementById('msgText').value = '';
+  alert('✅ Message added to Heart ' + heart + '!');
+}
+function deleteItem(type, i) {
+  if (!confirm('Delete this item?')) return;
+  APP_DATA[type].splice(i, 1);
+  saveData(); renderAdminLists();
+}
+
+function saveSettings() {
+  APP_DATA.settings.giftPassword = document.getElementById('setGiftPw').value.trim() || '2604';
+  APP_DATA.settings.adminPassword = document.getElementById('setAdminPw').value.trim() || '1504';
+  APP_DATA.settings.passcodePhoto = document.getElementById('setPasscodePhoto').value.trim() || '🎂';
+  APP_DATA.settings.heart1Title = document.getElementById('setHeart1Title').value.trim() || 'Shayari & Songs 💌';
+  APP_DATA.settings.heart2Title = document.getElementById('setHeart2Title').value.trim() || 'Our Photos 📸';
+  APP_DATA.settings.heart3Title = document.getElementById('setHeart3Title').value.trim() || 'Notes & Messages 📝';
+  APP_DATA.settings.heart4Title = document.getElementById('setHeart4Title').value.trim() || 'Her Voice 🎤';
+  saveData();
+  applySettings();
+  alert('✅ Settings saved!');
+}
+
+/* EXPORT / IMPORT */
+function exportData() {
+  const blob = new Blob([JSON.stringify(APP_DATA, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'birthday-backup-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click(); URL.revokeObjectURL(url);
+}
+function importData(e) {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    try {
+      const imported = JSON.parse(ev.target.result);
+      if (!confirm('Purana data replace ho jayega. Continue?')) return;
+      APP_DATA = { ...DEFAULT_DATA, ...imported, settings: { ...DEFAULT_DATA.settings, ...(imported.settings||{}) } };
+      saveData(); applySettings(); renderAdminLists();
+      alert('✅ Imported!');
+    } catch(err) { alert('❌ Invalid JSON'); }
+  };
+  r.readAsText(f);
+}
+function resetAll() {
+  if (!confirm('⚠ Sab kuch delete ho jayega. Sure?')) return;
+  if (!confirm('Pakka? Undo nahi hoga.')) return;
+  APP_DATA = JSON.parse(JSON.stringify(DEFAULT_DATA));
+  saveData(); applySettings(); renderAdminLists();
+  alert('✅ Reset done!');
+}
+
+/* ============ INIT ============ */
+document.addEventListener('DOMContentLoaded', () => {
+  buildClock();
+  startCountdown();
+  makeSparkles();
+  applySettings();
+  renderHearts();
+});
+window.addEventListener('resize', buildClock);
+</script>
+</body>
+</html>

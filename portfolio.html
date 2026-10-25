@@ -66,7 +66,7 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* ─── SCROLL REVEAL (JS will add .visible) ─── */
+    /* ─── SCROLL REVEAL (JS adds .visible) ─── */
     .reveal {
       opacity: 0;
       transform: translateY(40px);
@@ -275,7 +275,7 @@
       animation-fill-mode: forwards;
     }
 
-    /* ─── PHOTO FRAME (WITH YOUR PHOTO) ─── */
+    /* ─── PHOTO FRAME (ADD YOUR IMAGE HERE) ─── */
     .avatar-frame {
       background: linear-gradient(145deg, #ffffff, #f0f3fc);
       width: 320px;
@@ -341,7 +341,7 @@
       max-width: 600px;
     }
 
-    /* ─── PROJECTS PLACEHOLDER (WITH ANIMATION) ─── */
+    /* ─── PROJECTS PLACEHOLDER ─── */
     .placeholder-box {
       background: #ffffff;
       border: 2px dashed #d0d8f0;
@@ -540,7 +540,8 @@
     .social-links a:hover .fa-facebook-f { color: #1877f2; }
     .social-links a:hover .fa-reddit-alien { color: #ff4500; }
     .social-links a:hover .fa-linkedin-in { color: #0a66c2; }
-    .social-links a:hover .fa-threads { color: #ffffff; }
+    .social-links a:hover .fa-x-twitter { color: #ffffff; }
+    .social-links a:hover .fa-pinterest-p { color: #e60023; }
     .social-links a:hover .fa-github { color: #ffffff; }
 
     /* ─── FOOTER ─── */
@@ -685,10 +686,14 @@
           </div>
         </div>
         <div class="hero-visual">
-          <!-- YOUR PHOTO ADDED HERE -->
+          <!-- ═══════════════════════════════════════════════════════════ -->
+          <!-- ⚠️ CHANGE YOUR IMAGE HERE ⚠️                              -->
+          <!-- Replace the src URL below with the path to your photo.    -->
+          <!-- Example: src="my-photo.jpg" or src="images/abdullah.png"  -->
+          <!-- ═══════════════════════════════════════════════════════════ -->
           <div class="avatar-frame">
             <img 
-              src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&h=600&fit=crop&crop=face" 
+              src="file_00000000f2a08207bb136bcd727dd9c4_11zon.png" 
               alt="Abdullah Shaikh — Developer & Problem Solver"
             >
           </div>
@@ -750,39 +755,51 @@
       </div>
     </div>
 
-    <!-- ─── CONTACT SECTION ─── -->
+    <!-- ─── CONTACT SECTION WITH ALL YOUR LINKS ─── -->
     <div class="container" id="contact">
       <div class="contact-section reveal">
         <h2>Let's connect</h2>
         <p>I'm always open to collaboration, opportunities, or a quick chat. Reach out through any platform below.</p>
         
+        <!-- Email button (optional: replace with your real email) -->
         <a href="mailto:abdullah@example.com" class="btn btn-primary" style="margin-bottom: 0.5rem;">
           <i class="fas fa-envelope" style="margin-right: 8px;"></i> abdullah@example.com
         </a>
 
+        <!-- ALL YOUR SOCIAL LINKS ADDED BELOW -->
         <div class="social-links">
-          <a href="https://instagram.com/" target="_blank" aria-label="Instagram">
+          <!-- GitHub -->
+          <a href="https://github.com/Abdullah-Shaikh-22" target="_blank" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/shaikhabdullah650/?hl=en" target="_blank" aria-label="Instagram">
             <i class="fab fa-instagram"></i>
           </a>
-          <a href="https://facebook.com/" target="_blank" aria-label="Facebook">
-            <i class="fab fa-facebook-f"></i>
+          <!-- X (Twitter) -->
+          <a href="https://x.com/Abdullah_04_07" target="_blank" aria-label="X (Twitter)">
+            <i class="fab fa-x-twitter"></i>
           </a>
-          <a href="https://reddit.com/" target="_blank" aria-label="Reddit">
-            <i class="fab fa-reddit-alien"></i>
+          <!-- Pinterest -->
+          <a href="https://in.pinterest.com/abdullahshaikh150704/" target="_blank" aria-label="Pinterest">
+            <i class="fab fa-pinterest-p"></i>
           </a>
-          <a href="https://linkedin.com/" target="_blank" aria-label="LinkedIn">
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/in/abdullah-shaikh-315280435/" target="_blank" aria-label="LinkedIn">
             <i class="fab fa-linkedin-in"></i>
           </a>
-          <a href="https://threads.net/" target="_blank" aria-label="Threads">
-            <i class="fab fa-threads"></i>
+          <!-- Facebook -->
+          <a href="https://www.facebook.com/people/Abdullah-Shaikh/pfbid0iCq6QkDWsd33ZxKAQofXfA8ps3cNibtEJrfzcSnJWxAuo6PAEYiaUBoeFvMEoKD6l/" target="_blank" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i>
           </a>
-          <a href="https://github.com/" target="_blank" aria-label="GitHub">
-            <i class="fab fa-github"></i>
+          <!-- Reddit -->
+          <a href="https://www.reddit.com/user/Abdullah_Shaikh_15/submitted/?sort=hot" target="_blank" aria-label="Reddit">
+            <i class="fab fa-reddit-alien"></i>
           </a>
         </div>
 
         <p style="font-size: 0.8rem; color: #8a8ab0; margin-top: 1.8rem; opacity: 0.7; position: relative;">
-          <i class="fas fa-info-circle"></i> Update links with your actual profiles
+          <i class="fas fa-info-circle"></i> All links are live and ready to use.
         </p>
       </div>
     </div>
@@ -818,7 +835,6 @@
           entries.forEach(entry => {
             if (entry.isIntersecting) {
               entry.target.classList.add('visible');
-              // Optional: stop observing after reveal
               observer.unobserve(entry.target);
             }
           });
@@ -830,12 +846,12 @@
         revealElements.forEach(el => observer.observe(el));
       }
 
-      // 3. Fallback: if IntersectionObserver not supported, show everything
+      // 3. Fallback if IntersectionObserver not supported
       if (!window.IntersectionObserver) {
         revealElements.forEach(el => el.classList.add('visible'));
       }
 
-      // 4. Subtle tilt effect on avatar frame (optional playful effect)
+      // 4. Subtle tilt effect on avatar frame
       const avatarFrame = document.querySelector('.avatar-frame');
       if (avatarFrame && window.matchMedia('(hover: hover)').matches) {
         avatarFrame.addEventListener('mousemove', (e) => {

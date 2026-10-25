@@ -573,6 +573,7 @@
   .admin-btn:hover { transform: translateY(-2px); }
   .admin-btn.danger { background: linear-gradient(135deg, #ff8888, #e65c5c); box-shadow: 0 4px 14px rgba(230,92,92,.4); }
   .admin-btn.blue { background: linear-gradient(135deg, #88b0ff, #5c7ee6); box-shadow: 0 4px 14px rgba(92,126,230,.4); }
+  .admin-btn.whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); box-shadow: 0 4px 14px rgba(37,211,102,.4); }
   .admin-list {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 12px; margin-top: 16px;
@@ -883,12 +884,20 @@
 <div id="adminPanel">
   <div class="admin-box">
     <div class="admin-head">
-      <h2>⚙ Admin Panel — Direct Upload</h2>
+      <h2>⚙ Admin Panel</h2>
       <button class="admin-close" onclick="closeAdmin()">✕ Close</button>
     </div>
     <div class="admin-note">
-      🌼 Yahan se **apni files choose karo** (URL ki zarurat nahi). File select karo, heart choose karo, add karo. Sab kuch browser me save hoga.
+      🌼 Yahan se saara content add/edit/delete karo. Har item ko kis heart me dikhana hai woh select karo.
     </div>
+    
+    <!-- WHATSAPP BUTTON -->
+    <div style="margin-bottom:20px; padding:16px; background:linear-gradient(135deg,#e8f5e0,#f7faf5); border-radius:16px; border:2px dashed rgba(37,211,102,.4);">
+      <h3 style="color:#128C7E; font-size:.9rem; margin-bottom:8px;">💬 WhatsApp Countdown Sender</h3>
+      <p style="font-size:.78rem; color:#5a7050; margin-bottom:12px;" id="waStatus">Click karo — aaj ka message WhatsApp me ready ho jayega.</p>
+      <button class="admin-btn whatsapp" onclick="sendWhatsAppCountdown()" style="font-size:.9rem; padding:12px 26px;">📱 Send Her</button>
+    </div>
+
     <div style="margin-bottom:20px;">
       <button class="admin-btn" onclick="exportData()">⬇ Export JSON</button>
       <button class="admin-btn blue" onclick="document.getElementById('importFile').click()">⬆ Import JSON</button>
@@ -1080,6 +1089,13 @@
         <input id="setGiftPw" placeholder="2604" maxlength="10">
         <label>Admin Password</label>
         <input id="setAdminPw" placeholder="1504" maxlength="10">
+        <h3 style="margin-top:18px;">WhatsApp Settings</h3>
+        <label>Uska WhatsApp Number (country code ke saath)</label>
+        <input id="setWhatsappNum" placeholder="+918188857361">
+        <label>Uska Naam</label>
+        <input id="setWhatsappName" placeholder="Jasmine">
+        <label>Birthday Date (YYYY-MM-DD)</label>
+        <input id="setBirthday" placeholder="2026-11-26" type="date">
         <h3 style="margin-top:18px;">Passcode Photo</h3>
         <label class="file-drop">
           <span class="fd-icon">🖼️</span>
@@ -1105,7 +1121,7 @@
 
 <script>
 /* ============ DATA STORAGE ============ */
-const STORAGE_KEY = 'birthday_surprise_v4';
+const STORAGE_KEY = 'birthday_surprise_v6';
 
 const DEFAULT_DATA = {
   settings: {
@@ -1115,7 +1131,11 @@ const DEFAULT_DATA = {
     heart1Title: 'Shayari & Songs 💌',
     heart2Title: 'Our Photos 📸',
     heart3Title: 'Notes & Messages 📝',
-    heart4Title: 'Her Voice 🎤'
+    heart4Title: 'Her Voice 🎤',
+    whatsappNumber: '+918188857361',
+    whatsappName: 'Jasmine',
+    birthdayDate: '2026-11-26',
+    lastMessageDay: -1
   },
   photos: [],
   audio: [],
@@ -1150,18 +1170,51 @@ function loadData() {
 }
 function saveData() {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(APP_DATA)); }
-  catch(e) {
-    alert('⚠ Storage full! Kuch items delete karo ya Export lelo.');
-  }
+  catch(e) { alert('⚠ Storage full! Kuch items delete karo ya Export lelo.'); }
 }
 let APP_DATA = loadData();
+
+/* ============ 32 DAYS MESSAGE TEMPLATES ============ */
+const DAILY_MESSAGES = {
+  32: "🌼 *32 Days to Go!* 🌼\n\nJasmine, tumhara birthday ab sirf 32 din door hai! 🎂\n\n✨ Taiyaariyan shuru karo, yeh mahina khaas hone wala hai! 💖",
+  31: "🌸 *31 Days to Go!* 🌸\n\nEk mahina bhi nahi bacha! 🎂\n\n🌼 Har din tumhare birthday ke aur kareeb! ✨",
+  30: "🎂 *30 Days to Go!* 🎉\n\nBas ek mahina! 🤩\n\n✨ Yeh 30 din bahut jaldi nikal jayenge! 💚",
+  29: "🌼 *29 Days to Go!* 🌼\n\nJasmine, sirf 29 din baaki! 💫\n\n🎂 Birthday vibes shuru ho rahi hain! ✨",
+  28: "✨ *28 Days to Go!* ✨\n\nChar hafte baaki! 🎉\n\n🌼 Tumhara din aa raha hai! 💖",
+  27: "🌸 *27 Days to Go!* 🌸\n\n27 din! Bohot jaldi! 🎂\n\n✨ Har subah ek naya countdown! 💚",
+  26: "🎂 *26 Days to Go!* 🎉\n\nSirf 26 din baaki! 🤩\n\n🌼 Taiyaari ka time aa gaya! ✨",
+  25: "🌼 *25 Days to Go!* 🌼\n\n25 din — ek chhota sa mahina! 🎂\n\n💫 Tumhare liye kuch khaas aa raha hai! 💖",
+  24: "✨ *24 Days to Go!* ✨\n\n24 din! Har din khaas hai! 🎉\n\n🌼 Birthday ka wait maza aata hai! 💚",
+  23: "🌸 *23 Days to Go!* 🌸\n\n23 din! Bohot kareeb! 🎂\n\n✨ Tumhare birthday ki khushbu aa rahi hai! 💖",
+  22: "🎂 *22 Days to Go!* 🎉\n\n22 din — kuch khaas hone wala hai! 🤩\n\n🌼 Har din ek naya surprise! ✨",
+  21: "🌼 *21 Days to Go!* 🌼\n\n21 din! Tumhara 21st birthday! 🎂\n\n💫 Yeh toh golden birthday hai! 💖",
+  20: "✨ *20 Days to Go!* ✨\n\nSirf 20 din! 🎉\n\n🌼 Countdown ab tez ho gaya hai! 💚",
+  19: "🌸 *19 Days to Go!* 🌸\n\n19 din baaki! 🎂\n\n✨ Har din ek nayi khushi! 💖",
+  18: "🎂 *18 Days to Go!* 🎉\n\n18 din — almost there! 🤩\n\n🌼 Tumhara din aa raha hai! ✨",
+  17: "🌼 *17 Days to Go!* 🌼\n\n17 din! Bohot kareeb! 🎂\n\n💫 Taiyaariyan kaisi chal rahi hain? 💖",
+  16: "✨ *16 Days to Go!* ✨\n\n16 din baaki! 🎉\n\n🌼 Kuch khaas plan kar rahe hain tumhare liye! 💚",
+  15: "🌸 *15 Days to Go!* 🌸\n\nAadha mahina! 🎂\n\n✨ Har din thoda aur close! 💖",
+  14: "🎂 *14 Days to Go!* 🎉\n\nDo hafte baaki! 🤩\n\n🌼 Countdown ab double speed pe! ✨",
+  13: "🌼 *13 Days to Go!* 🌼\n\n13 din! Har din khaas hai! 🎂\n\n💫 Tumhare liye kuch bada aa raha hai! 💖",
+  12: "✨ *12 Days to Go!* ✨\n\n12 din! Bohot jaldi! 🎉\n\n🌼 Birthday ki taiyaari shuru! 💚",
+  11: "🌸 *11 Days to Go!* 🌸\n\n11 din — almost 10! 🎂\n\n✨ Har pal khaas hai! 💖",
+  10: "🎂 *10 Days to Go!* 🎉\n\nSirf 10 din! 🤩\n\n🌼 Countdown double digits me! ✨",
+  9: "🌼 *9 Days to Go!* 🌼\n\n9 din baaki! 🎂\n\n💫 Tumhare liye surprises taiyaar hain! 💖",
+  8: "✨ *8 Days to Go!* ✨\n\n8 din! Bohot kareeb! 🎉\n\n🌼 Sirf ek hafta baaki! 💚",
+  7: "🌸 *7 Days to Go!* 🌸\n\nEk hafta! 🎂\n\n✨ Har subah countdown! 💖",
+  6: "🎂 *6 Days to Go!* 🎉\n\n6 din! Almost there! 🤩\n\n🌼 Bohot jaldi! ✨",
+  5: "🌼 *5 Days to Go!* 🌼\n\n5 din! Panch din! 🎂\n\n💫 Taiyaari kaisi hai? 💖",
+  4: "✨ *4 Days to Go!* ✨\n\n4 din! Sirf 4! 🎉\n\n🌼 Har pal khaas hai! 💚",
+  3: "🌸 *3 Days to Go!* 🌸\n\n3 din! Almost! 🎂\n\n✨ Bohot kareeb! 💖",
+  2: "🎂 *2 Days to Go!* 🎉\n\nSirf 2 din! Kal nahi, parso! 🤩\n\n🌼 Taiyaar ho? ✨",
+  1: "🌼 *1 Day to Go!* 🌼\n\nKal tumhara birthday hai! 🎂\n\n💫 Aaj raat 12 baje se celebration shuru! 💖",
+  0: "🎉 *HAPPY BIRTHDAY JASMINE!* 🎂\n\nAaj tumhara din hai! ✨\n\n🌼 Yeh saal tumhara hai — khushiyon bhara, pyaar bhara! 💚\n\n🌸 Happy Birthday once again! 🌸"
+};
 
 /* ============ NAV ============ */
 function nextPage(n) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  let target;
-  if (n === 'jasmine') target = document.getElementById('pageJasmine');
-  else target = document.getElementById('page' + n);
+  let target = (n === 'jasmine') ? document.getElementById('pageJasmine') : document.getElementById('page' + n);
   if (target) target.classList.add('active');
   if (n === 6) renderHearts();
   if (n === 'jasmine') startJasmineRain();
@@ -1193,6 +1246,12 @@ function buildClock() {
 function startCountdown() {
   function getTarget() {
     const now = new Date();
+    const bd = APP_DATA.settings.birthdayDate ? new Date(APP_DATA.settings.birthdayDate) : null;
+    if (bd && !isNaN(bd)) {
+      bd.setHours(0,0,0,0);
+      if (bd < now) bd.setFullYear(now.getFullYear() + 1);
+      return bd;
+    }
     const t = new Date(now.getFullYear(), 10, 26, 0, 0, 0);
     if (t < now) t.setFullYear(t.getFullYear() + 1);
     return t;
@@ -1540,8 +1599,6 @@ function handleFilePreview(inputId, previewId, type) {
     preview.dataset.name = file.name;
   };
   reader.readAsDataURL(file);
-  // Update label
-  const label = document.getElementById(inputId.replace('File','FileName').replace('photoFile','photoFileName').replace('audioFile','audioFileName').replace('voiceFile','voiceFileName').replace('videoFile','videoFileName'));
   const correctLabel = document.querySelector(`#${inputId}`).parentElement.querySelector('span:nth-child(2)');
   if (correctLabel) correctLabel.textContent = '✓ ' + file.name;
 }
@@ -1595,6 +1652,26 @@ function openAdmin() {
   document.getElementById('setHeart2Title').value = APP_DATA.settings.heart2Title;
   document.getElementById('setHeart3Title').value = APP_DATA.settings.heart3Title;
   document.getElementById('setHeart4Title').value = APP_DATA.settings.heart4Title;
+  document.getElementById('setWhatsappNum').value = APP_DATA.settings.whatsappNumber || '';
+  document.getElementById('setWhatsappName').value = APP_DATA.settings.whatsappName || 'Jasmine';
+  document.getElementById('setBirthday').value = APP_DATA.settings.birthdayDate || '2026-11-26';
+  
+  const bdStr = APP_DATA.settings.birthdayDate;
+  if (bdStr) {
+    const today = new Date(); today.setHours(0,0,0,0);
+    const bd = new Date(bdStr); bd.setHours(0,0,0,0);
+    if (bd < today) bd.setFullYear(today.getFullYear() + 1);
+    const daysLeft = Math.round((bd - today) / (1000*60*60*24));
+    const lastSent = APP_DATA.settings.lastMessageDay;
+    
+    if (lastSent === daysLeft) {
+      document.getElementById('waStatus').innerHTML = `✅ Aaj ka message (${daysLeft} days) bhej diya gaya! Kal agla message aayega.`;
+      document.getElementById('waStatus').style.color = '#128C7E';
+    } else {
+      document.getElementById('waStatus').innerHTML = `⏳ Aaj ka message (${daysLeft} days) abhi bhejna hai. Button dabao!`;
+      document.getElementById('waStatus').style.color = '#e63950';
+    }
+  }
 }
 function closeAdmin() { document.getElementById('adminPanel').classList.remove('show'); }
 function switchAdminTab(tab, btn) {
@@ -1747,7 +1824,9 @@ function deleteItem(type, i) {
 function saveSettings() {
   APP_DATA.settings.giftPassword = document.getElementById('setGiftPw').value.trim() || '2604';
   APP_DATA.settings.adminPassword = document.getElementById('setAdminPw').value.trim() || '1504';
-  // Passcode photo from file
+  APP_DATA.settings.whatsappNumber = document.getElementById('setWhatsappNum').value.trim();
+  APP_DATA.settings.whatsappName = document.getElementById('setWhatsappName').value.trim() || 'Jasmine';
+  APP_DATA.settings.birthdayDate = document.getElementById('setBirthday').value;
   const preview = document.getElementById('passcodePhotoPreview');
   if (preview.dataset.url) APP_DATA.settings.passcodePhoto = preview.dataset.url;
   APP_DATA.settings.heart1Title = document.getElementById('setHeart1Title').value.trim() || 'Shayari & Songs 💌';
@@ -1756,7 +1835,48 @@ function saveSettings() {
   APP_DATA.settings.heart4Title = document.getElementById('setHeart4Title').value.trim() || 'Her Voice 🎤';
   saveData();
   applySettings();
-  alert('✅ Settings saved!');
+  alert('✅ Settings saved!\n\nWhatsApp Number: ' + (APP_DATA.settings.whatsappNumber || 'not set'));
+  openAdmin();
+}
+
+/* ============ WHATSAPP SENDER (UPDATED) ============ */
+function sendWhatsAppCountdown() {
+  const num = APP_DATA.settings.whatsappNumber;
+  if (!num) { alert('⚠ Pehle Settings me uska WhatsApp number daalo!'); return; }
+  
+  const bdStr = APP_DATA.settings.birthdayDate;
+  if (!bdStr) { alert('⚠ Birthday date set karo!'); return; }
+  
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const bd = new Date(bdStr);
+  bd.setHours(0,0,0,0);
+  if (bd < today) { bd.setFullYear(today.getFullYear() + 1); }
+  
+  const diffTime = bd - today;
+  const daysLeft = Math.round(diffTime / (1000 * 60 * 60 * 24));
+  
+  let lastSent = APP_DATA.settings.lastMessageDay;
+  if (lastSent === daysLeft) {
+    if (!confirm('Aaj ka message pehle hi bhej diya gaya hai. Kya phir se bhejna hai?')) {
+      return;
+    }
+  }
+  
+  let msg = DAILY_MESSAGES[daysLeft] || `🌼 *${daysLeft} Days to Go!* 🌼\n\nJasmine, countdown chal raha hai! 🎂`;
+  
+  const cleanNum = num.replace(/[^0-9]/g, '');
+  const waUrl = `https://wa.me/${cleanNum}?text=${encodeURIComponent(msg)}`;
+  window.open(waUrl, '_blank');
+  
+  APP_DATA.settings.lastMessageDay = daysLeft;
+  saveData();
+  
+  document.getElementById('waStatus').innerHTML = `✅ Aaj ka message (${daysLeft} days) bhej diya gaya! Kal agla message aayega.`;
+  document.getElementById('waStatus').style.color = '#128C7E';
+  document.getElementById('waStatus').style.fontWeight = 'bold';
+  
+  throwConfetti();
 }
 
 function exportData() {
